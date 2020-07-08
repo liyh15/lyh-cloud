@@ -16,7 +16,7 @@ public class CustomController {
     @Value("${parmas.body}")
     private String body;
 
-    @RequestMapping("body")
+    @RequestMapping("ccccccccccccccccccccccccccc")
     // @PreAuthorize("hasAuthority('p1')")
     public String body() {
         return body;
