@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fee9d56b-d34f-40f6-9ec8-6d283cb7a95e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/lyh-cloud.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lyh-cloud.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/CustomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/CustomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/RabbitMQController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/RabbitMQController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,12 +143,24 @@
       <workItem from="1593756902943" duration="13863000" />
       <workItem from="1593995700209" duration="22300000" />
       <workItem from="1594081703187" duration="13281000" />
-      <workItem from="1594199770994" duration="5312000" />
+      <workItem from="1594199770994" duration="6027000" />
     </task>
+    <task id="LOCAL-00001" summary="添加">
+      <created>1594208680433</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1594208680433</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1593759698934">
@@ -166,10 +171,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1132" y="318" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594104825983" />
-    <state x="557" y="116" key="CommitChangelistDialog2" timestamp="1594206818848">
+    <state x="557" y="116" key="CommitChangelistDialog2" timestamp="1594208678991">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="557" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594206818848" />
+    <state x="557" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594208678991" />
     <state x="763" y="251" key="FileChooserDialogImpl" timestamp="1594169742664">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -226,6 +231,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023812550" />
+    <state x="552" y="256" key="Vcs.Push.Dialog.v2" timestamp="1594208684375">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="256" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594208684375" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1593766397280">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -248,7 +257,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java</url>
-          <line>210</line>
+          <line>213</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

@@ -1,9 +1,12 @@
 package wibo.cloud.custom.config;
 
+import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +26,7 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue helloQueue() {
-        return new Queue("hello");
+        return new Queue("hello",true, false, false);
     }
 
     /**
@@ -212,5 +215,34 @@ public class RabbitMQConfig {
             }
         });
         return rabbitTemplate;
+    }
+
+    /**
+     * 创建互联互通 消息监听
+     */
+    @Bean
+    public SimpleMessageListenerContainer wxDelayMessageContainer() {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
+        container.setQueues(helloQueue());
+        container.setExposeListenerChannel(true);
+        container.setMaxConcurrentConsumers(10);
+        container.setConcurrentConsumers(1);
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setMessageListener(new ChannelAwareMessageListener() {
+            @Override
+            public void onMessage(Message message, Channel channel) throws Exception {
+                try {
+                    //false只确认当前一个消息收到，true确认所有consumer获得的消息
+                    log.info("微信获取access_token监听推送消息：{}",new String(message.getBody()));
+                    if (true) {
+                        log.error("微信获取access_token推送消息失败");
+                    }
+                    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+                } catch (Exception e) {
+                    log.info("重新获取微信请求access_token消息 失败：{}，详情：{}", new String(message.getBody()),e);
+                }
+            }
+        });
+        return container;
     }
 }
