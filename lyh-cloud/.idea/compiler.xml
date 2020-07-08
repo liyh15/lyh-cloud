@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lyh-cloud-custom" />
+        <module name="lyh-cloud-config" />
+        <module name="lyh-cloud-eureka" />
+        <module name="lyh-cloud-common" />
+        <module name="lyh-cloud-uaa" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="lyh-cloud-common" options="-parameters" />
+      <module name="lyh-cloud-config" options="-parameters" />
+      <module name="lyh-cloud-custom" options="-parameters" />
+      <module name="lyh-cloud-eureka" options="-parameters" />
+      <module name="lyh-cloud-uaa" options="-parameters" />
+    </option>
+  </component>
+</project>
