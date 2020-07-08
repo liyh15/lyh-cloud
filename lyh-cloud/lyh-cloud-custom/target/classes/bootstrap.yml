@@ -1,0 +1,25 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: custom
+  # 配置中心
+  cloud:
+    config:
+      fail-fast: true  #表示失败重试
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: config #表示config-server的服务名
+  profiles:
+    active: dev  #表示默认的访问的配置为开发环境配置
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

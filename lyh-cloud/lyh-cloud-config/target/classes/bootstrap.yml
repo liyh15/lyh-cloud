@@ -1,0 +1,21 @@
+server:
+  port: 8765
+
+spring:
+  application:
+    name: config
+  profiles:
+    active: native   #配置native，config-server默认从resources目录下搜索配置文件
+  # 配置中心
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config/ #设置配置文件的路径
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
