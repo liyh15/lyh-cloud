@@ -1,0 +1,15 @@
+wibo\cloud\common\config\ReturnHandlerConfig.class
+wibo\cloud\common\config\SwaggerConfig.class
+wibo\cloud\common\response\HelloResponse.class
+wibo\cloud\common\config\ErrorCode$Status.class
+wibo\cloud\common\config\MyException.class
+wibo\cloud\common\config\ReturnValueHandler.class
+wibo\cloud\common\pojo\Test.class
+wibo\cloud\common\pojo\TastJob.class
+wibo\cloud\common\response\BaseResponse.class
+wibo\cloud\common\config\ErrorCode.class
+wibo\cloud\common\response\TestResponse.class
+wibo\cloud\common\config\FeginAspectConfig.class
+wibo\cloud\common\response\MySqlTestResponse.class
+wibo\cloud\common\config\BusinessException.class
+wibo\cloud\common\config\BaseController.class

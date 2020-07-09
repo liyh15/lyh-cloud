@@ -1,0 +1,6 @@
+wibo\cloud\uaa\config\TokenConfig.class
+wibo\cloud\uaa\config\AuthorizationServer.class
+wibo\cloud\uaa\UaaApplication.class
+wibo\cloud\uaa\config\MyBatisConfig.class
+wibo\cloud\uaa\config\WebSecurityConfig.class
+wibo\cloud\uaa\config\MySqlConfiguration.class

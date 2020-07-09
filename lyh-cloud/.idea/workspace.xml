@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fee9d56b-d34f-40f6-9ec8-6d283cb7a95e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/LoginAnnotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/LoginUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/HandlerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/handler/HandlerIntercepterAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/handler/LoginUserHandlerResolve.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/handler/SpringMvcConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="AnnotationType" />
       </list>
     </option>
   </component>
@@ -57,6 +64,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="wibo.cloud.custom.handler" />
       <recent name="wibo.cloud.uaa.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -143,7 +151,8 @@
       <workItem from="1593756902943" duration="13863000" />
       <workItem from="1593995700209" duration="22300000" />
       <workItem from="1594081703187" duration="13281000" />
-      <workItem from="1594199770994" duration="6027000" />
+      <workItem from="1594199770994" duration="6770000" />
+      <workItem from="1594254816935" duration="10993000" />
     </task>
     <task id="LOCAL-00001" summary="添加">
       <created>1594208680433</created>
@@ -152,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594208680433</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="添加">
+      <created>1594209451994</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1594209451994</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,74 +183,74 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1593759698934" />
-    <state x="1132" y="318" key="#com.intellij.ide.util.MemberChooser" timestamp="1594104825983">
+    <state x="1132" y="318" key="#com.intellij.ide.util.MemberChooser" timestamp="1594278811652">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1132" y="318" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594104825983" />
-    <state x="557" y="116" key="CommitChangelistDialog2" timestamp="1594208678991">
+    <state x="1132" y="318" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594278811652" />
+    <state x="557" y="116" key="CommitChangelistDialog2" timestamp="1594209450877">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="557" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594208678991" />
+    <state x="557" y="116" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594209450877" />
     <state x="763" y="251" key="FileChooserDialogImpl" timestamp="1594169742664">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="763" y="251" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594169742664" />
-    <state width="1877" height="264" key="GridCell.Tab.0.bottom" timestamp="1594201115548">
+    <state width="1877" height="215" key="GridCell.Tab.0.bottom" timestamp="1594284378405">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="264" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594201115548" />
-    <state width="1877" height="264" key="GridCell.Tab.0.center" timestamp="1594201115548">
+    <state width="1877" height="215" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378405" />
+    <state width="1877" height="215" key="GridCell.Tab.0.center" timestamp="1594284378405">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="264" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594201115548" />
-    <state width="1877" height="264" key="GridCell.Tab.0.left" timestamp="1594201115548">
+    <state width="1877" height="215" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378405" />
+    <state width="1877" height="215" key="GridCell.Tab.0.left" timestamp="1594284378405">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="264" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594201115548" />
-    <state width="1877" height="264" key="GridCell.Tab.0.right" timestamp="1594201115548">
+    <state width="1877" height="215" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378405" />
+    <state width="1877" height="215" key="GridCell.Tab.0.right" timestamp="1594284378405">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="264" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594201115548" />
-    <state width="1877" height="186" key="GridCell.Tab.1.bottom" timestamp="1594201047641">
+    <state width="1877" height="215" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378405" />
+    <state width="1877" height="94" key="GridCell.Tab.1.bottom" timestamp="1594284457478">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="186" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594201047641" />
-    <state width="1877" height="186" key="GridCell.Tab.1.center" timestamp="1594201047641">
+    <state width="1877" height="94" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594284457478" />
+    <state width="1877" height="94" key="GridCell.Tab.1.center" timestamp="1594284457478">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="186" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594201047641" />
-    <state width="1877" height="186" key="GridCell.Tab.1.left" timestamp="1594201047641">
+    <state width="1877" height="94" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594284457478" />
+    <state width="1877" height="94" key="GridCell.Tab.1.left" timestamp="1594284457478">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="186" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594201047641" />
-    <state width="1877" height="186" key="GridCell.Tab.1.right" timestamp="1594201047641">
+    <state width="1877" height="94" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594284457478" />
+    <state width="1877" height="94" key="GridCell.Tab.1.right" timestamp="1594284457478">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="186" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594201047641" />
-    <state width="1877" height="197" key="GridCell.Tab.2.bottom" timestamp="1594200976891">
+    <state width="1877" height="94" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594284457478" />
+    <state width="1877" height="215" key="GridCell.Tab.2.bottom" timestamp="1594284378325">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="197" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594200976891" />
-    <state width="1877" height="197" key="GridCell.Tab.2.center" timestamp="1594200976891">
+    <state width="1877" height="215" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378325" />
+    <state width="1877" height="215" key="GridCell.Tab.2.center" timestamp="1594284378325">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="197" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594200976891" />
-    <state width="1877" height="197" key="GridCell.Tab.2.left" timestamp="1594200976891">
+    <state width="1877" height="215" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378325" />
+    <state width="1877" height="215" key="GridCell.Tab.2.left" timestamp="1594284378325">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="197" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594200976891" />
-    <state width="1877" height="197" key="GridCell.Tab.2.right" timestamp="1594200976891">
+    <state width="1877" height="215" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378325" />
+    <state width="1877" height="215" key="GridCell.Tab.2.right" timestamp="1594284378325">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="197" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594200976891" />
+    <state width="1877" height="215" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594284378325" />
     <state x="463" y="165" key="SettingsEditor" timestamp="1594023812550">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023812550" />
-    <state x="552" y="256" key="Vcs.Push.Dialog.v2" timestamp="1594208684375">
+    <state x="552" y="256" key="Vcs.Push.Dialog.v2" timestamp="1594255231834">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="256" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594208684375" />
+    <state x="552" y="256" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594255231834" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1593766397280">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -251,16 +267,5 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1594200516874" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java</url>
-          <line>213</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

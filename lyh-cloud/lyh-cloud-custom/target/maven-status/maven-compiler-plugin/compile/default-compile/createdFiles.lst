@@ -1,0 +1,6 @@
+wibo\cloud\custom\controller\RabbitMQController.class
+wibo\cloud\custom\controller\CustomController.class
+wibo\cloud\custom\CustomApplication.class
+wibo\cloud\custom\config\RabbitMQConfig$1.class
+wibo\cloud\custom\config\RabbitMQConfig$2.class
+wibo\cloud\custom\config\RabbitMQConfig.class
