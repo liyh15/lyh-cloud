@@ -30,7 +30,7 @@ public class HandlerIntercepterAdapter extends HandlerInterceptorAdapter {
         // 获取请求头里面的token
         String token = request.getHeader("token");
         Claims claims =  Jwts.parser()
-                .setSigningKey("lalalalalalalalalalalalalalalalalalala")
+                .setSigningKey("lalalalalalalalalalalalalalalalalalalaAAA")
                 .parseClaimsJws(token)
                 .getBody();
         String userId = claims.getSubject();
