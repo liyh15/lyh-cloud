@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import wibo.cloud.common.config.BusinessException;
+import wibo.cloud.common.config.ErrorCode;
+import wibo.cloud.common.response.BaseResponse;
 
 @RestController
 @RefreshScope
@@ -18,13 +21,14 @@ public class CustomController {
 
     @RequestMapping("ccccccccccccccccccccccccccc")
     // @PreAuthorize("hasAuthority('p1')")
-    public String body() {
-        return body;
+    public BaseResponse body() {
+        return BaseResponse.DEFAULT;
     }
 
     @RequestMapping("name")
     // @PreAuthorize("hasAuthority('p2')")
-    public String name() {
-        return name;
+    public BaseResponse name() {
+        BusinessException.throwException(ErrorCode.Status.MESSAGE_IS_NULL);
+        return BaseResponse.DEFAULT;
     }
 }

@@ -28,6 +28,8 @@ public class BaseController {
 
     /**
      * 抛出自定义异常
+     * 这种自定义返回结果不会走HandlerMethodReturnValueHandler的RequestBody的处理
+     * 会直接进行转换过去
      * @param exc
      * @return
      */

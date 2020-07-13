@@ -237,6 +237,7 @@ public class RabbitMQConfig {
                     if (true) {
                         log.error("微信获取access_token推送消息失败");
                     }
+                    // 发送消息确认处理的信息
                     channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
                 } catch (Exception e) {
                     log.info("重新获取微信请求access_token消息 失败：{}，详情：{}", new String(message.getBody()),e);

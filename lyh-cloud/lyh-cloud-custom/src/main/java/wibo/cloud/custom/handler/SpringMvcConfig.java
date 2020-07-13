@@ -16,6 +16,10 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     @Autowired
     public HandlerIntercepterAdapter handlerIntercepterAdapter;
 
+    /**
+     * 添加接口入参拦截类
+     * @param resolvers
+     */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(loginUserHandlerResolve);
