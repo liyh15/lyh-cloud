@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fee9d56b-d34f-40f6-9ec8-6d283cb7a95e" name="Default Changelist" comment="添加">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="fee9d56b-d34f-40f6-9ec8-6d283cb7a95e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lyh-cloud-uaa/src/main/java/wibo/cloud/uaa/controller/SecurityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-common/src/main/java/wibo/cloud/common/config/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-common/src/main/java/wibo/cloud/common/config/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-common/src/main/java/wibo/cloud/common/config/ReturnValueHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-common/src/main/java/wibo/cloud/common/config/ReturnValueHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-common/target/classes/wibo/cloud/common/config/BaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-common/target/classes/wibo/cloud/common/config/BaseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-common/target/classes/wibo/cloud/common/config/ReturnValueHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-common/target/classes/wibo/cloud/common/config/ReturnValueHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/config/RabbitMQConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/CustomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/controller/CustomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/handler/SpringMvcConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/handler/SpringMvcConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/mq/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/java/wibo/cloud/custom/mq/RabbitMQConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/META-INF/lyh-cloud-custom.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/config/RabbitMQConfig$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/config/RabbitMQConfig$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/config/RabbitMQConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/config/RabbitMQConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/controller/CustomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/controller/CustomController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/handler/SpringMvcConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-custom/target/classes/wibo/cloud/custom/handler/SpringMvcConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lyh-cloud.iml" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyh-cloud-uaa/src/main/java/wibo/cloud/uaa/config/AuthorizationServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-uaa/src/main/java/wibo/cloud/uaa/config/AuthorizationServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lyh-cloud-uaa/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lyh-cloud-uaa/src/main/resources/application.yml" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,9 +29,9 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="localRepository" value="C:\maven\responstery2" />
-        <option name="mavenHome" value="$PROJECT_DIR$/../maven/apache-maven-3.6.2" />
-        <option name="userSettingsFile" value="C:\maven\apache-maven-3.6.2\conf\settings.xml" />
+        <option name="localRepository" value="D:\apache-maven-3.6.2\repository" />
+        <option name="mavenHome" value="D:/apache-maven-3.6.2" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.2\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -64,12 +53,15 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
@@ -99,7 +91,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.RabbitMQConsumer2">
+  <component name="RunManager" selected="Spring Boot.UaaApplication">
     <configuration name="RabbitMQConsumer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="wibo.cloud.custom.mq.RabbitMQConsumer" />
       <module name="lyh-cloud-custom" />
@@ -190,11 +182,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.RabbitMQConsumer" />
+        <item itemvalue="Spring Boot.UaaApplication" />
         <item itemvalue="Spring Boot.CustomApplication" />
         <item itemvalue="Spring Boot.ConfigApplication" />
         <item itemvalue="Spring Boot.EurekaApplication" />
-        <item itemvalue="Spring Boot.UaaApplication" />
+        <item itemvalue="Application.RabbitMQConsumer" />
       </list>
     </recent_temporary>
   </component>
@@ -215,6 +207,9 @@
       <workItem from="1594199770994" duration="6770000" />
       <workItem from="1594254816935" duration="16776000" />
       <workItem from="1594341926058" duration="5711000" />
+      <workItem from="1594639394645" duration="824000" />
+      <workItem from="1594727308643" duration="835000" />
+      <workItem from="1594728930086" duration="5105000" />
     </task>
     <task id="LOCAL-00001" summary="添加">
       <created>1594208680433</created>
@@ -244,11 +239,31 @@
       <option name="project" value="LOCAL" />
       <updated>1594290508961</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="添加">
+      <created>1594639606098</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1594639606098</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="添加" />

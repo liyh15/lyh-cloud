@@ -31,4 +31,11 @@ public class CustomController {
         BusinessException.throwException(ErrorCode.Status.MESSAGE_IS_NULL);
         return BaseResponse.DEFAULT;
     }
+
+    @RequestMapping("getName")
+    // @PreAuthorize("hasAuthority('p2')")
+    public BaseResponse getName(String name) {
+        System.out.println(name);
+        return BaseResponse.DEFAULT;
+    }
 }

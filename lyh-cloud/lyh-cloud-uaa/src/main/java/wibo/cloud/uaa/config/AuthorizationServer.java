@@ -21,8 +21,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 /**
  * 配置OAuth2.0授权服务器
  */
-@Configuration
-@EnableAuthorizationServer
+/*@Configuration
+@EnableAuthorizationServer*/
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     // 令牌的生成和保存方式
