@@ -1,9 +1,12 @@
 package wibo.cloud.custom.filter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+@Component
 @WebFilter(urlPatterns = "/*",filterName = "ServletFilter")
 public class ServletFilter implements Filter {
 
@@ -17,6 +20,14 @@ public class ServletFilter implements Filter {
 
     }
 
+    /**
+     FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+     filterRegistrationBean.setOrder(6);       // 这个是用来设置执行顺序
+     filterRegistrationBean.setFilter(new AFilter());
+     filterRegistrationBean.setName("filter1");
+     filterRegistrationBean.addUrlPatterns("/*");
+     return filterRegistrationBean;
+     */ 
     /**
      * 指定拦截的方法
      * @param servletRequest
