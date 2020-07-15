@@ -24,14 +24,20 @@ public class CustomController {
     public BaseResponse body() {
         return BaseResponse.DEFAULT;
     }
-
+    
     @RequestMapping("name")
-    // @PreAuthorize("hasAuthority('p2')")
+    //@PreAuthorize("hasAuthority('p2')")
     public BaseResponse name() {
         BusinessException.throwException(ErrorCode.Status.MESSAGE_IS_NULL);
         return BaseResponse.DEFAULT;
     }
-
+    
+    /**
+     * @param name
+     * @throws
+     * @author lyh
+     * @date 2020/7/15 18:00
+     */
     @RequestMapping("getName")
     // @PreAuthorize("hasAuthority('p2')")
     public BaseResponse getName(String name) {
