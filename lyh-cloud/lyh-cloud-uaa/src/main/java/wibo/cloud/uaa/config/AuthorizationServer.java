@@ -2,11 +2,13 @@ package wibo.cloud.uaa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
@@ -17,10 +19,10 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * 配置OAuth2.0授权服务器
+ * 配置OAuth2.0授权服务器, 授权主要是校验客户端是否符合标准
  */
-/*@Configuration
-@EnableAuthorizationServer*/
+@Configuration
+@EnableAuthorizationServer
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     // 令牌的生成和保存方式
@@ -30,15 +32,15 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+/*    @Autowired
+    private AuthenticationManager authenticationManager;*/
 
     @Autowired
     private AuthorizationCodeServices authorizationCodeServices;
 
     /**
      * 配置客户端详情信息
-     * 可用于配置客户端的认证信息，从而实现客户端的筛选功能
+     * 可用于配置客户端的认证信息，从而实现客户端的筛选功能，就是类似于ClientDetailService
      * @param clients
      * @throws Exception
      */
@@ -48,10 +50,10 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
       clients.inMemory() // 使用内存存储
               .withClient("client1") // client_id
               .secret(new BCryptPasswordEncoder().encode("secret"))
-              .resourceIds("res1")
+              .resourceIds("res1") // 可以访问的资源id
               .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
-              .scopes("all") // 允许的授权范围
-              .autoApprove(true)
+              .scopes("all") // 允许的授权范围, 表示允许授权所有地方
+              .autoApprove(false)  // 不进行自动批准,跳转到授权页面
               // 加上验证回调地址
               .redirectUris("http://www.baidu.com");
     }
@@ -70,15 +72,15 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     }
 
     /**
-     * 令牌访问端点的配置
+     * 令牌访问端点的配置（配置了令牌的所有东西，包括认证管理器，授权码如何存储，）
      * @param endpoints
      * @throws Exception
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)  // 认证管理器
-                .authorizationCodeServices(authorizationCodeServices) // 表示授权码如何存储
-                .tokenServices(tokenService())  // 管理令牌的接口累
+        endpoints/*.authenticationManager(authenticationManager) */ // 认证管理器, 表示使用密码授权
+                .authorizationCodeServices(authorizationCodeServices) // 表示授权码如何存储,现在暂时使用内存存储
+                .tokenServices(tokenService())  // 管理令牌的接口类
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
     }
 
@@ -88,9 +90,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     public AuthorizationServerTokenServices tokenService() {
         DefaultTokenServices service = new DefaultTokenServices();
-        service.setClientDetailsService(clientDetailsService);
+        service.setClientDetailsService(clientDetailsService); // 设置客户端详情
         service.setSupportRefreshToken(true);
-        service.setTokenStore(tokenStore);
+        service.setTokenStore(tokenStore); // 令牌的初持久化保存方式
         service.setAccessTokenValiditySeconds(7200); // 令牌默认有效期2小时
         service.setRefreshTokenValiditySeconds(259200); // 刷新令牌默认有效期3天
         return service;

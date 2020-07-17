@@ -54,6 +54,7 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>2.3.6.RELEASE</version>
         </dependency>
+
     </dependencies>
     <build>
         <!-- 如果不加的话会提示没有主清单属性 -->
