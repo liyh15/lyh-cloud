@@ -24,7 +24,7 @@ spring:
     publisher-confirms: true
     virtual-host: /
   redis:
-    host: 192.168.56.136
+    host: 10.11.1.52
     port: 6379
     jedis:
       pool:

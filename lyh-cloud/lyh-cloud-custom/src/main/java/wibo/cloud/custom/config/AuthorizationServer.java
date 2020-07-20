@@ -32,7 +32,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     // 令牌的生成和保存方式
     @Autowired
-    private TokenStore tokenStore;
+    private TokenStore redisTokenStore;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -87,7 +87,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
-                .tokenStore(tokenStore) // 配置令牌的存储方式, 这里使用reids存储
+                .tokenStore(redisTokenStore) // 配置令牌的存储方式, 这里使用reids存储, 表示服务端用redis存储
                 .userDetailsService(userDetailsService) // 表示使用密码认证方式的用户配置来源
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
     }
