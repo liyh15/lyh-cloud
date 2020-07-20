@@ -3,6 +3,7 @@ package wibo.cloud.custom.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import wibo.cloud.custom.mapper.StudentMapper;
 import wibo.cloud.custom.mapper.TeacherMapper;
@@ -31,12 +32,14 @@ public class TestController {
      * @author liyuanhao
      * @date 2020/7/20 19:18
      */
-    @RequestMapping("one")
+    @RequestMapping(value = "one", method = RequestMethod.GET)
     @Transactional
-    public String one() {
+    public String one() throws InterruptedException {
         studentMapper.update(1);
+        System.out.println("ccc");
+        Thread.sleep(5000);
         teacherMapper.update(1);
-        System.out.println("aaa");
+        System.out.println("rrr");
         return "one";
     }
 
@@ -49,12 +52,14 @@ public class TestController {
      * @author liyuanhao
      * @date 2020/7/20 19:18
      */
-    @RequestMapping("two")
+    @RequestMapping(value = "two",method = RequestMethod.GET)
     @Transactional
-    public String two() {
+    public String two() throws InterruptedException {
         teacherMapper.update(1);
+        System.out.println("ddd");
+        Thread.sleep(10000);
         studentMapper.update(1);
-        System.out.println("aaa");
+        System.out.println("bbb");
         return "two";
     }
 }
