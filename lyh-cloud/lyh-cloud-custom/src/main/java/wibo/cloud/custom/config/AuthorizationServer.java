@@ -1,12 +1,15 @@
-package wibo.cloud.uaa.config;
+package wibo.cloud.custom.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -18,6 +21,7 @@ import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCo
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
  * 配置OAuth2.0授权服务器
@@ -31,20 +35,22 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     private TokenStore tokenStore;
 
     @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthorizationCodeServices authorizationCodeServices;
+    private RedisConnectionFactory redisConnectionFactory;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     /**
      * 配置客户端详情信息
-     * 可用于配置客户端的认证信息，从而实现客户端的筛选功能，就是类似于ClientDetailService
+     * 可用于配置客户端的认证信息，从而实现客户端的筛选功能
      * @param clients
      * @throws Exception
      */
@@ -58,9 +64,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
               .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
               .scopes("all") // 允许的授权范围
               .accessTokenValiditySeconds(1800); // 设置accesstoken的过期时间，1800秒
-//              .autoApprove(true) // 不需要手动点击授权
-//              // 加上验证回调地址
-//              .redirectUris("http://www.baidu.com");
     }
 
     /**
@@ -84,32 +87,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
-                .tokenStore(tokenStore) // 配置令牌的存储方式
-                .userDetailsService(userDetailsService)
+                .tokenStore(tokenStore) // 配置令牌的存储方式, 这里使用reids存储
+                .userDetailsService(userDetailsService) // 表示使用密码认证方式的用户配置来源
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
-    }
-
-    /**
-     * 定义管理令牌的接口类，可以对令牌进行详细的配置
-     * @return
-     */
-    public AuthorizationServerTokenServices tokenService() {
-        DefaultTokenServices service = new DefaultTokenServices();
-        service.setClientDetailsService(clientDetailsService);
-        service.setSupportRefreshToken(true);
-        service.setTokenStore(tokenStore);
-        service.setAccessTokenValiditySeconds(7200); // 令牌默认有效期2小时
-        service.setRefreshTokenValiditySeconds(259200); // 刷新令牌默认有效期3天
-        return service;
-    }
-
-    /**
-     * 配置授权码的存储方式
-     * @return
-     */
-    @Bean
-    public AuthorizationCodeServices authorizationCodeServices() {
-        //设置授权码模式的授权码如何 存取，暂时采用内存方式
-        return new InMemoryAuthorizationCodeServices();
     }
 }

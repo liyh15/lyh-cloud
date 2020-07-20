@@ -14,8 +14,6 @@ public class RabbitMQConsumer {
 
     public static String a = "BBB";
 
-    public static int num = 0;
-
     public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
         RabbitMQConsumer.consumer();
     }
@@ -34,9 +32,9 @@ public class RabbitMQConsumer {
          *  autoDelete: false, //如果所有消费者都断开连接了,是否自动删除.如果还没有消费者从该队列获取过消息或者监听该队列,那么该队列不会删除.只有在有消费者从该队列获取过消息后,该队列才有可能自动删除(当所有消费者都断开连接,不管消息是否获取完)
          */
         channel.queueDeclare("Queue_Java", false, false, false, null);
-            Consumer consumer = new DefaultConsumer(channel) {
+        Consumer consumer = new DefaultConsumer(channel) {
 
-                @Override
+            @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) {
                 String message = new String(body);
                 System.out.println("Received22: " + message);
@@ -100,33 +98,39 @@ public class RabbitMQConsumer {
         Channel channel = connection.createChannel();
         channel.queueDeclare("Queue_Java", false, false, false, null);
         channel.basicQos(1);
-        // 定义回调方法
-        channel.queueDeclare("topic.messages", true, false, false, null);
-        channel.basicQos(200);
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+                String message = new String(body);
+                System.out.println(message + a);
+                if (a.equals("AAA")) {
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println("已经处理完");
                 // 消息确认
                 try {
                     /**
                      * 第一个参数表示投递标签，从1开始每次增加1，用于唯一标识信道的每次投递，
                      * 第二个参数表示是否进行消息的批量确认。若确认消息时开启批量确认，则投递标签小于当前消息投递标签的所有消息也都会进行确认。
                      */
-                    num ++;
-                    channel.basicAck(envelope.getDeliveryTag(), true);
-                } catch (Exception e) {
+                    channel.basicAck(envelope.getDeliveryTag(), false);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         };
         // 关闭自动消息确认，autoAck = false
-        channel.basicConsume("topic.messages", false, consumer);
+        channel.basicConsume("Queue_Java", false, consumer);
     }
 
 
     public static Connection getConnection() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
         connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("10.11.1.52");
+        connectionFactory.setHost("192.168.56.131");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("admin");
         connectionFactory.setPassword("admin");

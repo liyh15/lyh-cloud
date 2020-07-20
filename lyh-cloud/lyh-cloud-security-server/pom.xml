@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>lyh-cloud-custom</artifactId>
+    <artifactId>lyh-cloud-security-server</artifactId>
     <dependencies>
         <dependency>
             <artifactId>lyh-cloud-common</artifactId>

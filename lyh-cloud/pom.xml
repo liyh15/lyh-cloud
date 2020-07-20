@@ -14,6 +14,7 @@
         <module>lyh-cloud-eureka</module>
         <module>lyh-cloud-common</module>
         <module>lyh-cloud-uaa</module>
+        <module>lyh-cloud-security-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

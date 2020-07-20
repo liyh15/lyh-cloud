@@ -1,8 +1,8 @@
 server:
-  port: 8082
+  port: 8085
 spring:
   application:
-    name: custom
+    name: server
   # 配置中心
   cloud:
     config:
@@ -17,7 +17,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   rabbitmq:
-    host: 10.11.1.52
+    host: 192.168.56.131
     port: 5672
     username: admin
     password: admin
