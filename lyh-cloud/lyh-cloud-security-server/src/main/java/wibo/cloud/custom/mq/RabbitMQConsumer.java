@@ -32,9 +32,9 @@ public class RabbitMQConsumer {
          *  autoDelete: false, //如果所有消费者都断开连接了,是否自动删除.如果还没有消费者从该队列获取过消息或者监听该队列,那么该队列不会删除.只有在有消费者从该队列获取过消息后,该队列才有可能自动删除(当所有消费者都断开连接,不管消息是否获取完)
          */
         channel.queueDeclare("Queue_Java", false, false, false, null);
-            Consumer consumer = new DefaultConsumer(channel) {
+        Consumer consumer = new DefaultConsumer(channel) {
 
-                @Override
+            @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) {
                 String message = new String(body);
                 System.out.println("Received22: " + message);
@@ -98,7 +98,6 @@ public class RabbitMQConsumer {
         Channel channel = connection.createChannel();
         channel.queueDeclare("Queue_Java", false, false, false, null);
         channel.basicQos(1);
-        // 定义回调方法
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
