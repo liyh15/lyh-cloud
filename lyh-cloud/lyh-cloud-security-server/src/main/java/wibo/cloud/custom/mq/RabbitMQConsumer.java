@@ -96,21 +96,13 @@ public class RabbitMQConsumer {
     public static void consumer() throws URISyntaxException, IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException {
         Connection connection = getConnection();
         Channel channel = connection.createChannel();
-        channel.queueDeclare("Queue_Java", false, false, false, null);
+        // channel.queueDeclare("Queue_Java", false, false, false, null);
         channel.basicQos(1);
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body);
-                System.out.println(message + a);
-                if (a.equals("AAA")) {
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                System.out.println("已经处理完");
+                System.out.println("已经处理完" + message);
                 // 消息确认
                 try {
                     /**
@@ -124,13 +116,13 @@ public class RabbitMQConsumer {
             }
         };
         // 关闭自动消息确认，autoAck = false
-        channel.basicConsume("Queue_Java", false, consumer);
+        channel.basicConsume("delay", false, consumer);
     }
 
 
     public static Connection getConnection() throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
         connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.56.131");
+        connectionFactory.setHost("10.11.1.52");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("admin");
         connectionFactory.setPassword("admin");

@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 @Slf4j
 public class RabbitMQConfig {
@@ -102,6 +105,11 @@ public class RabbitMQConfig {
     public Queue FC() {
         return new Queue("fanout.C");
     }
+
+    @Bean("delay")
+    public Queue delay() {
+       return new Queue("delay");
+    }
     // =============以上是验证Fanout Exchange的队列
     /**
      *     exchange是交换机交换机的主要作用是接收相应的消息并且绑定到指定的队列.交换机有四种类型,分别为Direct,topic,headers,Fanout.
@@ -114,6 +122,36 @@ public class RabbitMQConfig {
      *
      * 　　Fanout是路由广播的形式,将会把消息发给绑定它的全部队列,即便设置了key,也会被忽略.
      */
+
+    /**
+     * 创建一个延迟队列
+     * @param
+     * @return
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2020/7/21 9:18
+     */ 
+    @Bean
+    public CustomExchange customExchange () {
+        Map<String, Object> args = new HashMap<>(16);
+        args.put("x-delayed-type", "direct"); // 表示队列的分发类型未direct类型
+        return new CustomExchange("delay", "x-delayed-message", true, false, args);
+    }
+
+    /**
+     * 组合延迟exchange和延迟队列
+     * @param
+     * @return
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2020/7/21 9:24
+     */
+    @Bean
+    public Binding bindDelay(@Qualifier("delay") Queue queue, CustomExchange customExchange) {
+        return BindingBuilder.bind(queue).to(customExchange).with("delay").noargs();
+    }
 
     /**
      * direct的exchannge
