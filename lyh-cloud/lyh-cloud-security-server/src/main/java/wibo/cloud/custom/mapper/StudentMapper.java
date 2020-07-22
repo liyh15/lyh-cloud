@@ -1,6 +1,9 @@
 package wibo.cloud.custom.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import wibo.cloud.common.pojo.Student;
+
+import java.util.List;
 
 /**
  * @Classname TestMapper
@@ -11,5 +14,7 @@ import org.apache.ibatis.annotations.Param;
 public interface StudentMapper {
 
     public Integer update(@Param("id") Integer id);
+
+    public Integer insert(@Param("stu") List<Student> student);
 }
 
