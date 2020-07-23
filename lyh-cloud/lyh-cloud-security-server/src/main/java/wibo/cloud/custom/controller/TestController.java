@@ -1,14 +1,21 @@
 package wibo.cloud.custom.controller;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import wibo.cloud.common.pojo.Student;
+import wibo.cloud.common.pojo.Test;
 import wibo.cloud.custom.mapper.StudentMapper;
 import wibo.cloud.custom.mapper.TeacherMapper;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -89,5 +96,45 @@ public class TestController {
             studentMapper.insert(students);
         }
         return "two";
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws
+     * @description 数据库操作B方法，分别更新两张表
+     * @author liyuanhao
+     * @date 2020/7/20 19:18
+     */
+    @RequestMapping(value = "post",method = RequestMethod.POST)
+    public String post(HttpServletRequest request) throws InterruptedException, IOException {
+        // System.out.println(test);
+        InputStream inputStream = request.getInputStream();
+        int a;
+        while ((a = inputStream.read()) != -1) {
+            System.out.println((char)a);
+        }
+        return "post";
+    }
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(9000);
+        while (true) {
+            Socket socket = serverSocket.accept();
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            try {
+                int a;
+                while ((a = inputStream.read()) != -1) {
+                    System.out.println((char)a);
+                }
+                outputStream.write(10);
+            } finally {
+                inputStream.close();
+                socket.getOutputStream().close();
+                socket.close();
+            }
+        }
     }
 }

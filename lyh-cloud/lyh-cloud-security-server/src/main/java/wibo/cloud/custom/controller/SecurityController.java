@@ -5,6 +5,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 
 @RestController
 public class SecurityController {
@@ -22,5 +26,13 @@ public class SecurityController {
         return "user";
     }
 
-
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 9000);
+        OutputStream outputStream = socket.getOutputStream();
+        InputStream inputStream = socket.getInputStream();
+        outputStream.write(1);
+        outputStream.close();
+        System.out.println(inputStream.read());
+        inputStream.close();
+    }
 }
