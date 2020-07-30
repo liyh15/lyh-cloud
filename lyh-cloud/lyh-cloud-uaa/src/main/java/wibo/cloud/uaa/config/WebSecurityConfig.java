@@ -23,10 +23,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        /*InMemoryUserDetailsManager manager  = new InMemoryUserDetailsManager();
+        InMemoryUserDetailsManager manager  = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("lyh").password(bCryptPasswordEncoder.encode("123")).authorities("p1").build());
-        manager.createUser(User.withUsername("hzy").password(bCryptPasswordEncoder.encode("123")).authorities("p2").build());*/
-        return new MyUserDetailsService();
+        manager.createUser(User.withUsername("hzy").password(bCryptPasswordEncoder.encode("123")).authorities("p2").build());
+        return manager;
     }
 
     // 密码编辑器

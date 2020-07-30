@@ -51,7 +51,9 @@ public class RabbitMQController {
      */
     @RequestMapping(value = "snedMq3", method = RequestMethod.GET)
     public BaseResponse sendMq3(String mqMessage, String routKey, String exchange) {
-        rabbitTemplate.convertAndSend(exchange, routKey, mqMessage);
+        for (int i = 0; i < 200000; i ++) {
+            rabbitTemplate.convertAndSend(exchange, routKey, mqMessage);
+        }
         return BaseResponse.DEFAULT;
     }
 

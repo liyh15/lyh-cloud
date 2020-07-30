@@ -16,5 +16,14 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
     </dependencies>
-
+    <build>
+        <!-- 如果不加的话会提示没有主清单属性 -->
+        <!-- 运行jar包的话需要加这个组件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

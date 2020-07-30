@@ -15,5 +15,4 @@ public class SecurityController {
     public String user() {
         return "user";
     }
-
 }

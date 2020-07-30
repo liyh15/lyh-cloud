@@ -17,7 +17,7 @@ public class RabbitMQConsumer {
     public static String a = "BBB";
 
     public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException, URISyntaxException, IOException, TimeoutException {
-        RabbitMQConsumer.queueParam();
+        RabbitMQConsumer.consumer();
     }
 
     /**
@@ -98,8 +98,8 @@ public class RabbitMQConsumer {
     public static void consumer() throws URISyntaxException, IOException, TimeoutException, NoSuchAlgorithmException, KeyManagementException {
         Connection connection = getConnection();
         Channel channel = connection.createChannel();
-        // channel.queueDeclare("Queue_Java", false, false, false, null);
-        channel.basicQos(1);
+        channel.queueDeclare("Queue_Java", false, false, false, null);
+        channel.basicQos(290);
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -118,8 +118,10 @@ public class RabbitMQConsumer {
             }
         };
         // 关闭自动消息确认，autoAck = false
-        channel.basicConsume("delay", false, consumer);
+        channel.basicConsume("Queue_Java", false, consumer);
     }
+
+
 
     /**
      * 消费消息
@@ -132,10 +134,10 @@ public class RabbitMQConsumer {
         // args.put("x-expires", 5000); // 表示没有与消费者绑定的队列最大的删除时间
         args.put("x-max-length", 2); // 设置队列最多存放的消息条数，如果超过数量，队列头部的消息将被删除
         // args.put("x-max-length-bytes", 10); // 队列可以容纳的最大字节数，超过这个字节数，队列头部的消息将会被删除
-        // args.put("x-overflow", "reject-publish"); // 设置消息拒绝策略，“拒收消息”
-        // args.put("x-dead-letter-exchange", "deadExchange"); // 该参数值为一个(死信)交换机的名称,当队列中的消息的生存期到了,或者因长度限制被丢弃时,消息会被推送到(绑定到)这台交换机(的队列中),而不是直接丢掉
-        args.put("x-dead-letter-routing-key", "test");
-        channel.queueDeclare("Test_Queues", false, false, false, args);
+        // args.put("x-overflow", "reject-publish"); // 设置消息拒绝策略，“拒收消息“，也可以是drop-head表示删除队列中最前面的消息(这个也是默认状态)
+        args.put("x-dead-letter-exchange", "deadExchange"); // 该参数值为一个(死信)交换机的名称,当队列中的消息的生存期到了,或者因长度限制被丢弃时,消息会被推送到(绑定到)这台交换机(的队列中),而不是直接丢掉
+        //args.put("x-dead-letter-routing-key", "test");
+        channel.queueDeclare("LYHAAAAA", false, false, false, args);
         /*channel.basicQos(1);
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
