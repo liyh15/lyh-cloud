@@ -1,5 +1,6 @@
 package com.wibo;
 
+
 import lombok.Data;
 
 /**
@@ -14,4 +15,8 @@ public class Apple {
     private int id = 1;
 
     private String name = "abcd";
+
+    public void test() {
+        System.out.println(name);
+    }
 }

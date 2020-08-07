@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import wibo.cloud.common.response.BaseResponse;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RefreshScope
@@ -78,3 +76,4 @@ public class RabbitMQController {
         return BaseResponse.DEFAULT;
     }
 }
+

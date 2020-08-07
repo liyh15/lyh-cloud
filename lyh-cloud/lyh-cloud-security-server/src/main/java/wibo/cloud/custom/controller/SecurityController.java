@@ -33,6 +33,8 @@ public class SecurityController {
         outputStream.write(1);
         outputStream.close();
         System.out.println(inputStream.read());
+        System.out.println();
         inputStream.close();
     }
+
 }

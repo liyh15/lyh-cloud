@@ -6,6 +6,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * 资源服务器的配置类
  */
@@ -24,5 +27,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/test/**").permitAll()
                 .and().csrf().disable();
+    }
+
+    public static void main(String[] args) {
+        LocalDateTime time = LocalDateTime.parse("2020-07-17 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(time.plusDays(180));
     }
 }

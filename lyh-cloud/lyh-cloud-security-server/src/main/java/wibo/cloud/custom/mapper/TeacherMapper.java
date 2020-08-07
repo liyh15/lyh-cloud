@@ -1,6 +1,8 @@
 package wibo.cloud.custom.mapper;
 
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
+import wibo.cloud.common.pojo.Theacher;
 
 /**
  * @Classname TestMapper
@@ -11,5 +13,9 @@ import org.apache.ibatis.annotations.Param;
 public interface TeacherMapper {
 
     public Integer update(@Param("id") Integer id);
+
+    public Theacher forup(@Param("name") String name);
+
+    public Integer insert(@Param("name") String name);
 }
 
