@@ -2,13 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="wibo.cloud.custom.mapper.TeacherMapper">
     <update id="update">
-        update teacher set name = 'ooo' where id = 1
+        update teacher set name = 'ooo' where id = #{id}
     </update>
     <select id="forup" resultType="wibo.cloud.common.pojo.Theacher">
        select * from teacher where name = #{name} for update
+    </select>
+    <select id="forupId" resultType="wibo.cloud.common.pojo.Theacher">
+       select * from teacher where id = #{id} for update
     </select>
 
     <insert id="insert">
         insert into teacher values (4,#{name},12)
     </insert>
+    <insert id="insertId">
+        insert into teacher values (#{id},'aaaaaaaa',12)
+    </insert>
+
+    <select id="select" resultType="wibo.cloud.common.pojo.Theacher">
+       select * from teacher where id = #{id} for update
+    </select>
 </mapper>

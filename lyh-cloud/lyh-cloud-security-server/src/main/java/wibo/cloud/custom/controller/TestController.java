@@ -93,13 +93,74 @@ public class TestController {
         return "two";
     }
 
+    @RequestMapping(value = "forup3", method = RequestMethod.GET)
+    @Transactional
+    public String forup3(String name) throws InterruptedException {
+        teacherMapper.forup(name);
+        System.out.println("33333333333");
+        Thread.sleep(5000);
+        return "two";
+    }
+
     @RequestMapping(value = "forup2", method = RequestMethod.GET)
     @Transactional
     public String forup2(String name) throws InterruptedException {
+        // TODO 对于插入而，如果插入的记录对应索引字段的字符串前两个字符匹配，则会阻塞
         teacherMapper.insert(name);
         System.out.println("bbbbbbbbbbbbb");
         return "two";
     }
+
+    @RequestMapping(value = "forup4", method = RequestMethod.GET)
+    @Transactional
+    public String forup4(String id) throws InterruptedException {
+        // TODO 对于数字索引字段而言，如果存在查询语句对此索引加锁(不管此索引字段是否存在)，都会被阻塞
+        teacherMapper.insertId(id);
+        System.out.println("eeeeeeeeeeee");
+        return "two";
+    }
+
+    @RequestMapping(value = "forup5", method = RequestMethod.GET)
+    @Transactional
+    public String forup5(String id) throws InterruptedException {
+        teacherMapper.forupId(id);
+        System.out.println("fffffffff");
+        Thread.sleep(3000);
+        return "two";
+    }
+
+    @RequestMapping(value = "update1", method = RequestMethod.GET)
+    @Transactional
+    public String update1(Integer id) throws InterruptedException {
+        // TODO 两个事务中如果存在交叉更新，则会出现死锁异常
+        teacherMapper.update(4);
+        System.out.println("fffffffff");
+        Thread.sleep(3000);
+        teacherMapper.update(1);
+        return "two";
+    }
+
+    @RequestMapping(value = "select", method = RequestMethod.GET)
+    @Transactional
+    public String select(Integer id) throws InterruptedException {
+        // TODO 当使用for update查询时，如果存在无提交事务跟新的这条数据，则for update语句阻塞，和更新阻塞一种情况，可以把for update看做是一个更新语句
+        teacherMapper.select(id);
+        System.out.println("zzzzzzzz");
+        return "select";
+    }
+
+
+
+    @RequestMapping(value = "update2", method = RequestMethod.GET)
+    @Transactional
+    public String update2(Integer id) throws InterruptedException {
+        teacherMapper.update(1);
+        System.out.println("xxxxxxxxxx");
+        teacherMapper.update(4);
+        return "two";
+    }
+
+
 
     /**
      * @param
@@ -150,25 +211,8 @@ public class TestController {
     }
 
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(9000);
-        while (true) {
-            Socket socket = serverSocket.accept();
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
-            try {
-                int a;
-                while ((a = inputStream.read()) != -1) {
-                    System.out.println((char) a);
-                }
-                outputStream.write(10);
-            } finally {
-                inputStream.close();
-                socket.getOutputStream().close();
-                socket.close();
-            }
-        }
+       TestController testController = new TestController();
+       testController.annTest(null);
     }
-
-
 }
 

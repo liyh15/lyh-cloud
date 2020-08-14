@@ -17,5 +17,14 @@ public interface TeacherMapper {
     public Theacher forup(@Param("name") String name);
 
     public Integer insert(@Param("name") String name);
+
+    public Integer insertId(@Param("id") String id);
+
+    public Theacher forupId(@Param("id") String id);
+
+    public Theacher select(@Param("id") Integer id);
+
+
+
 }
 
