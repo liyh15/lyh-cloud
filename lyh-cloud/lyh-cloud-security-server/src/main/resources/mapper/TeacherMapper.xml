@@ -10,6 +10,11 @@
     <select id="forupId" resultType="wibo.cloud.common.pojo.Theacher">
        select * from teacher where id = #{id} for update
     </select>
+    <resultMap id="base" type="wibo.cloud.common.pojo.Theacher">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+    </resultMap>
 
     <insert id="insert">
         insert into teacher values (4,#{name},12)
@@ -19,6 +24,10 @@
     </insert>
 
     <select id="select" resultType="wibo.cloud.common.pojo.Theacher">
-       select * from teacher where id = #{id} for update
+       select * from teacher
+    </select>
+
+    <select id="selectList" resultMap="base">
+        select sum(id),id from teacher
     </select>
 </mapper>

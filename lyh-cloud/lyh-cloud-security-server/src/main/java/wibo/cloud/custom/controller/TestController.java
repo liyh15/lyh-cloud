@@ -1,4 +1,5 @@
 package wibo.cloud.custom.controller;
+import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import wibo.cloud.custom.mapper.StudentMapper;
 import wibo.cloud.custom.mapper.TeacherMapper;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -210,9 +212,37 @@ public class TestController {
         return "post";
     }
 
+    @RequestMapping(value = "selectList", method = RequestMethod.POST)
+    public String selectList(HttpServletRequest request) throws IOException {
+
+        System.out.println(teacherMapper.selectList().size());
+        return "post";
+    }
+
+
+    /**
+     * 将一个字符串转化为输入流
+     *
+     * @param sInputString
+     * @return
+     */
+    public static InputStream getStrToStream(String sInputString) {
+        if (sInputString != null && !sInputString.trim().equals("")) {
+            try {
+                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
+                return tInputStringStream;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) throws IOException {
-       TestController testController = new TestController();
-       testController.annTest(null);
+        int a = 1;
+        int b = 2;
+        int c = 3;
+        String aa = "aaa";
     }
 }
 

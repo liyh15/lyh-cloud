@@ -17,7 +17,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   rabbitmq:
-    host: 10.11.1.52
+    host: 127.0.0.1
     port: 5672
     username: admin
     password: admin
@@ -39,7 +39,7 @@ eureka:
 
 redis:
   cluster:
-    nodes: 10.11.1.52:7001,10.11.1.52:7002,10.11.1.52:7003,10.11.1.52:7004,10.11.1.52:7005,10.11.1.52:7006
+    nodes: 10.11.1.188:7001,10.11.1.188:7002,10.11.1.188:7003,10.11.1.188:7004,10.11.1.188:7005,10.11.1.188:7006
     timeout: 60000
     maxAttempts: 3
     maxWaitMillis: 60000

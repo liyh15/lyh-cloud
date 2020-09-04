@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 资源服务器的配置类
@@ -25,12 +26,18 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/test/**").permitAll()
+                .antMatchers("/r/**").authenticated()
+                .anyRequest().permitAll() // 表示释放所有的请求，必须写在释放的路径后面
+                //.anyRequest().authenticated() // 表示拦截所有的请求，必须写在释放的路径后面
                 .and().csrf().disable();
     }
 
     public static void main(String[] args) {
-        LocalDateTime time = LocalDateTime.parse("2020-07-17 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(time.plusDays(180));
+        int a = 1;
+        int b = 2;
+        int c = 3;
+        double d = 1D;
+        String cc = "333";
+        Date date = new Date();
     }
 }

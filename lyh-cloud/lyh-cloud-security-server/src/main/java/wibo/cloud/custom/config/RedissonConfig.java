@@ -19,7 +19,7 @@ public class RedissonConfig {
     public RedissonClient redissonClient() {
         Config config = new Config();
         config.useClusterServers()
-                .addNodeAddress("redis://10.11.1.52:7001","redis://10.11.1.52:7002","redis://10.11.1.52:7003","redis://10.11.1.52:7004","redis://10.11.1.52:7005","redis://10.11.1.52:7006");
+                .addNodeAddress("redis://10.11.1.188:7001","redis://10.11.1.188:7002","redis://10.11.1.188:7003","redis://10.11.1.188:7004","redis://10.11.1.188:7005","redis://10.11.1.188:7006");
         RedissonClient redisson = Redisson.create(config);
         return redisson;
     }

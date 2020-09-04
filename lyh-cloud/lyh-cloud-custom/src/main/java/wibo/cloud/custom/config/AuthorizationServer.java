@@ -10,6 +10,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -20,8 +21,12 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 配置OAuth2.0授权服务器
@@ -89,6 +94,26 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
                 .tokenStore(redisTokenStore) // 配置令牌的存储方式, 这里使用reids存储, 表示服务端用redis存储
                 .userDetailsService(userDetailsService) // 表示使用密码认证方式的用户配置来源
+                .tokenEnhancer(tokenEnhancer()) // 申请令牌返回的数据添加json属性
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     * @throws
+     * @description 申请令牌返回的数据添加json属性
+     * @author liyuanhao
+     * @date 2020/8/19 15:04
+     */
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return (accessToken, authentication) -> {
+            final Map<String, Object> additionalInfo = new HashMap<>(1);
+            additionalInfo.put("tokenEnhancer", "这个是令牌增强器添加的新的json属性");
+            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+            return accessToken;
+        };
     }
 }

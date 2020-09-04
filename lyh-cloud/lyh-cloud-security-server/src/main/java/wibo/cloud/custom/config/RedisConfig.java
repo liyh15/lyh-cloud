@@ -3,7 +3,9 @@ package wibo.cloud.custom.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -121,9 +124,13 @@ public class RedisConfig {
          */
         ObjectMapper om = new ObjectMapper();
         /**
-         *  PropertyAccessor.ALL会有一种情况，当有字段有大写字母时会生成两个相同字段，一个大写一个小写
          *  如果需要保留大写，给类添加@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY, getterVisibility=JsonAutoDetect.Visibility.NONE)
          *  这个注解将getter生成的字段给隐藏掉，getter就是生成小写的方法
+         *  PropertyAccessor.ALL的规则是通过属性名和getter方法同时获得属性，直接通过属性名获取不区分大小写，但是getter方法获取会属性的第一个字母给小写化，
+         *  所以如果属性的第一个字母大写的话如果用PropertyAccessor.ALL就会出现生成的json串里面会有两个相同的属性首字母大小写不相同，所以命名属性名的时候还是
+         *  用驼峰命名法就不会出现这个问题
+         *   @JsonDeserialize(as = Apple.class) 注释在接口属性上会指定反序列化的实体类
+         *
          */
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         // 空属性不会转化成json
@@ -139,6 +146,79 @@ public class RedisConfig {
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);// Hash value序列化
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+
+     static interface Fruit {
+     }
+
+
+    static class Apple implements Fruit {
+        private String apple = "apple";
+
+         public String getApple() {
+             return apple;
+         }
+
+         public void setApple(String apple) {
+             this.apple = apple;
+         }
+     }
+
+
+    static class Test {
+        private String onePerson = "111";
+
+        private String aAa = "BBB";
+
+        private String vvv = "plk";
+
+        @JsonDeserialize(as = Apple.class)
+        private Fruit fruit;
+
+        public Fruit getFruit() {
+            return fruit;
+        }
+
+        public void setFruit(Fruit fruit) {
+            this.fruit = fruit;
+        }
+
+        public String getOnePerson() {
+            return onePerson;
+        }
+
+        public void setOnePerson(String onePerson) {
+            this.onePerson = onePerson;
+        }
+
+        public String getaAa() {
+            return aAa;
+        }
+
+        public void setaAa(String aAa) {
+            this.aAa = aAa;
+        }
+
+        public String getVvv() {
+            return vvv;
+        }
+
+        public void setVvv(String vvv) {
+            this.vvv = vvv;
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+         Test test = new Test();
+         Apple apple = new Apple();
+         test.setFruit(apple);
+         ObjectMapper om = new ObjectMapper();
+         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+         om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+         System.out.println(om.writeValueAsString(test));
+         Test test1 = om.readValue(om.writeValueAsString(test), Test.class);
+         System.out.println(test1);
     }
 
 }

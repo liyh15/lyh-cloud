@@ -4,6 +4,8 @@ import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 import wibo.cloud.common.pojo.Theacher;
 
+import java.util.List;
+
 /**
  * @Classname TestMapper
  * @Description TODO
@@ -24,7 +26,6 @@ public interface TeacherMapper {
 
     public Theacher select(@Param("id") Integer id);
 
-
-
+    public List<Theacher> selectList();
 }
 

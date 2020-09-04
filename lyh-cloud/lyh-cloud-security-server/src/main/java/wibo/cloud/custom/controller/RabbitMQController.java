@@ -40,6 +40,7 @@ public class RabbitMQController {
     @RequestMapping(value = "snedMq2", method = RequestMethod.GET)
     public BaseResponse sendMq2(String mqMessage, String routKey) {
         rabbitTemplate.convertAndSend(routKey, mqMessage);
+
         return BaseResponse.DEFAULT;
     }
 
