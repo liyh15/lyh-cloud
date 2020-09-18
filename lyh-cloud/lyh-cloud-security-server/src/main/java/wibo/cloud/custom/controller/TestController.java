@@ -122,12 +122,28 @@ public class TestController {
         return "two";
     }
 
+    @RequestMapping(value = "forup7", method = RequestMethod.GET)
+    @Transactional
+    public String forup7(String name) throws InterruptedException {
+        teacherMapper.updateByName(name);
+        Thread.sleep(5000);
+        System.out.println("forup7");
+        return "two";
+    }
+
+    @RequestMapping(value = "forup8", method = RequestMethod.GET)
+    @Transactional
+    public String forup8(String name) throws InterruptedException {
+        teacherMapper.updateByName(name);
+        System.out.println("forup8");
+        return "two";
+    }
+
     @RequestMapping(value = "forup5", method = RequestMethod.GET)
     @Transactional
     public String forup5(String id) throws InterruptedException {
         teacherMapper.forupId(id);
         System.out.println("fffffffff");
-        Thread.sleep(3000);
         return "two";
     }
 
@@ -145,13 +161,11 @@ public class TestController {
     @RequestMapping(value = "select", method = RequestMethod.GET)
     @Transactional
     public String select(Integer id) throws InterruptedException {
-        // TODO 当使用for update查询时，如果存在无提交事务跟新的这条数据，则for update语句阻塞，和更新阻塞一种情况，可以把for update看做是一个更新语句
+        // TODO 当使用for update查询时，如果存在无提交事务跟新的这条数据，则for update语句阻塞，和更新阻塞一种情况，可以把for update看做是一个更新语句(可以同时锁住多个行)
         teacherMapper.select(id);
         System.out.println("zzzzzzzz");
         return "select";
     }
-
-
 
     @RequestMapping(value = "update2", method = RequestMethod.GET)
     @Transactional
@@ -238,10 +252,18 @@ public class TestController {
         return null;
     }
 
-    public static void main(String[] args) throws IOException {
+    public void testAaa() {
         int a = 1;
         int b = 2;
         int c = 3;
+    }
+
+    public static void main(String[] args) throws IOException {
+        TestController testController = new TestController();
+        int a = 1;
+        int b = 2;
+        int c = 3;
+        testController.testAaa();
         String aa = "aaa";
     }
 }

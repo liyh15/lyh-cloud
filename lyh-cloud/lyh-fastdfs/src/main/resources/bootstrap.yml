@@ -1,0 +1,26 @@
+server:
+  port: 8666
+spring:
+  application:
+    name: fdfs
+  cloud:
+    config:
+      fail-fast: true  #表示失败重试
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: config
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+

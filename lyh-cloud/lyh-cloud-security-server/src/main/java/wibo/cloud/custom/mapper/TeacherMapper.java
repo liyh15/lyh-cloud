@@ -26,6 +26,8 @@ public interface TeacherMapper {
 
     public Theacher select(@Param("id") Integer id);
 
+    public Integer updateByName(@Param("name") String name);
+
     public List<Theacher> selectList();
 }
 

@@ -30,4 +30,8 @@
     <select id="selectList" resultMap="base">
         select sum(id),id from teacher
     </select>
+
+    <select id="updateByName">
+        update teacher set age = 100 where name in (#{name})
+    </select>
 </mapper>
