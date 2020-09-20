@@ -25,7 +25,8 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(getApiInfo()).select()
-                .apis(basePackage("wibo.cloud.custom.controller" + SPLIT + "wibo.cloud.custom.controller"))
+                .apis(basePackage("wibo.cloud.custom.controller" + SPLIT + "wibo.cloud.custom.controller" + SPLIT +
+                        "wibo.cloud.fastdfs.controller"))
                 .paths(PathSelectors.any()).build();
     }
 

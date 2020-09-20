@@ -16,6 +16,7 @@
         <module>lyh-cloud-uaa</module>
         <module>lyh-cloud-security-server</module>
         <module>lyh-algorithm</module>
+        <module>lyh-fastdfs</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -25,9 +25,9 @@ spring:
     virtual-host: /
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://10.11.1.52:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
+    jdbcUrl: jdbc:mysql://10.11.1.147:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
     userName: root
-    password: 851535
+    password:
 
 
 eureka:

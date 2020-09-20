@@ -264,8 +264,8 @@ public class RabbitMQConfig {
         container.setQueues(helloQueue());
         container.setExposeListenerChannel(true);
         container.setMaxConcurrentConsumers(10);
-        container.setConcurrentConsumers(1); // 设置并发消费者数量
-        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setConcurrentConsumers(1); // 设置最少的并发消费者数量
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); // 设置为手动确认
         container.setMessageListener(new ChannelAwareMessageListener() {
             @Override
             public void onMessage(Message message, Channel channel) throws Exception {

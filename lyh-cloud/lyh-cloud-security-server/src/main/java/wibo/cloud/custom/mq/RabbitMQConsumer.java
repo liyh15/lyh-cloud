@@ -152,7 +152,7 @@ public class RabbitMQConsumer {
                      * 第二个参数表示是否进行消息的批量确认。若确认消息时开启批量确认，则投递标签小于当前消息投递标签的所有消息也都会进行确认。
                      *//*
                     channel.basicAck(envelope.getDeliveryTag(), false);
-                } catch (IOException | InterruptedException e) {s
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
