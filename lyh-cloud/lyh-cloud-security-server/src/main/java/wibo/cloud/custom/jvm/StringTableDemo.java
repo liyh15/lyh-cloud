@@ -1,5 +1,8 @@
 package wibo.cloud.custom.jvm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * String的垃圾回收:
  * -Xms15m -Xmx15m -XX:+PrintStringTableStatistics -XX:+PrintGCDetails
@@ -9,10 +12,16 @@ package wibo.cloud.custom.jvm;
  */
 public class StringTableDemo {
     public static void main(String[] args) throws InterruptedException {
-        for (int j = 0; j < 100000; j++) {
-            String.valueOf(j).intern();
+        String a = null;
+        int i = 1;
+        List<String> b = new ArrayList<>();
+        try {
+            while(true) {
+                a = i++ + "aaaaaaaaaaaaa";
+                b.add(a.intern());
+            }
+        }finally {
+            System.out.println("aaa" + i);
         }
-        Thread.sleep(100000);
-        System.out.println("aaa");
     }
 }

@@ -24,7 +24,7 @@ public class ReturnValueHandler implements HandlerMethodReturnValueHandler {
         return handlerMethodReturnValueHandler.supportsReturnType(returnType);
     }
 
-    // 这里处理的是正常返回的数据，不是一场返回的数据
+    // 这里处理的是正常返回的数据，不是异常返回的数据
     @Override
     public void handleReturnValue(Object returnValue, MethodParameter returnType, ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
         log.error("returnValue:{}", returnValue);
