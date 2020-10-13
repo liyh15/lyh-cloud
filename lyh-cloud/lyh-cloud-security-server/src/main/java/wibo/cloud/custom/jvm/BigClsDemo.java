@@ -11,6 +11,8 @@ public class BigClsDemo {
       String a = "aaa";
       String b = a +"bbb";
       String c = "aaabbb";
-        System.out.println(b == c);
+      System.out.println(b.getClass());
+      System.out.println(a.getClass());
+        System.out.println(StringBuilder.class.getClassLoader());
     }
 }

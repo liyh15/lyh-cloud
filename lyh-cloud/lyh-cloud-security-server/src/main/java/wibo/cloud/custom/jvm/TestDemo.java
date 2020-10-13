@@ -10,12 +10,20 @@ import java.util.List;
  * @Created by lyh
  */
 public class TestDemo {
+
+    public void one() {
+        System.out.println("aaa");
+    }
+
+    public void two(String a) {
+        System.out.println(a);
+    }
+
     public static void main(String[] args) {
-        List<String> a = new ArrayList<>();
-        String b = "asd";
-        while (true) {
-            a.add(b);
-            b = b + b;
-        }
+        TestDemo demo = new TestDemo();
+        demo.one();
+        int b = 1;
+        String c = "aaaaa";
+        demo.two(c);
     }
 }

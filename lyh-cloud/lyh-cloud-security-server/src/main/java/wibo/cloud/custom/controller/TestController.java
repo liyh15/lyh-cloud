@@ -190,13 +190,11 @@ public class TestController {
     @Transactional
     public String insert() throws InterruptedException {
         List<Student> students = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             Student student = new Student();
             students.add(student);
         }
-        for (int i = 0; i < 100; i++) {
-            studentMapper.insert(students);
-        }
+        studentMapper.insert(students);
         return "two";
     }
 

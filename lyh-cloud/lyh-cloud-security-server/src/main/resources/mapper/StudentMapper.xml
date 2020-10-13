@@ -4,12 +4,12 @@
     <update id="update">
         update student set name = 'ooo' where id = 1
     </update>
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into
-        student(`name`, `des`, produce)
+        student(`name`)
         values
-        <foreach collection="stu" separator="," item="s">
-            (#{s.name}, 'bbb', 'ccc')
+        <foreach collection="list" separator="," item="s">
+            (#{s.name})
         </foreach>
     </insert>
 </mapper>
