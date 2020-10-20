@@ -231,6 +231,12 @@ public class TestController {
         return "post";
     }
 
+    @RequestMapping(value = "selectById", method = RequestMethod.POST)
+    public String selectById() {
+        System.out.println(teacherMapper.seeee(1));
+        return "post";
+    }
+
 
     /**
      * 将一个字符串转化为输入流

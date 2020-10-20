@@ -14,6 +14,7 @@ public class HeapDemo {
         System.out.println("start...");
         StringBuilder builder = new StringBuilder();
 
+        List<String> list = new ArrayList<>();
         String a = "aa";
         String b = "b";
         String c = (a + "b").intern();

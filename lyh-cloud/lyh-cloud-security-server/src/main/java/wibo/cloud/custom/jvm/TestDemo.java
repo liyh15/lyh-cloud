@@ -20,10 +20,9 @@ public class TestDemo {
     }
 
     public static void main(String[] args) {
-        TestDemo demo = new TestDemo();
-        demo.one();
-        int b = 1;
-        String c = "aaaaa";
-        demo.two(c);
+       String a = "aaa";
+       String c = a + "bbb";
+       String b = c.intern();
+       System.out.println(c == b);
     }
 }

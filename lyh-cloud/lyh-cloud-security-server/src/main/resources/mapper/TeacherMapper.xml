@@ -16,6 +16,10 @@
         <result column="age" property="age"/>
     </resultMap>
 
+    <select id="selectById" resultMap="base">
+         select * from teacher where id = #{id}
+    </select>
+
     <insert id="insert">
         insert into teacher values (4,#{name},12)
     </insert>
@@ -24,14 +28,17 @@
     </insert>
 
     <select id="select" resultType="wibo.cloud.common.pojo.Theacher">
-       select * from teacher
+       select * from teacher where id = #{id}
     </select>
 
+    <select id="selectN" resultType="wibo.cloud.common.pojo.Theacher">
+       select * from teacher where name = #{name}
+    </select>
     <select id="selectList" resultMap="base">
         select sum(id),id from teacher
     </select>
 
-    <select id="updateByName">
+    <update id="updateByName">
         update teacher set age = 100 where name in (#{name})
-    </select>
+    </update>
 </mapper>
