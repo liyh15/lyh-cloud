@@ -1,5 +1,8 @@
 package wibo.cloud.custom.jvm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Classname GCRootTest
  * @Description TODO
@@ -8,9 +11,9 @@ package wibo.cloud.custom.jvm;
  */
 public class GCRootTest {
     public static void main(String[] args) throws InterruptedException {
-        String a = "aaaaaaaaaaaaaa";
-        String b = "bbbbbbbbbbbbbbb";
-        GCRootTest test = new GCRootTest();
-        Thread.sleep(10000000);
+        List<GCRootTest> tests = new ArrayList<>();
+        while (true) {
+            tests.add(new GCRootTest());
+        }
     }
 }

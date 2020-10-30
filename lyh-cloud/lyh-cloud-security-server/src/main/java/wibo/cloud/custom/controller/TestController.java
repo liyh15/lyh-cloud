@@ -104,6 +104,50 @@ public class TestController {
         return "two";
     }
 
+    /*
+       TODO 当字段是字符串时，如果有索引但是字段区别度不高，则更新的时候还是全表锁
+     */
+    @RequestMapping(value = "update", method = RequestMethod.GET)
+    @Transactional
+    public String update(String name) throws InterruptedException {
+        teacherMapper.updateAge(name);
+        System.out.println("33333333333");
+        Thread.sleep(5000);
+        return "two";
+    }
+
+    /*
+     */
+    @RequestMapping(value = "update22222", method = RequestMethod.GET)
+    @Transactional
+    public String update3(Integer age) throws InterruptedException {
+        teacherMapper.updateName(age);
+        System.out.println("4444444444444");
+        Thread.sleep(5000);
+        return "update2";
+    }
+
+
+    @RequestMapping(value = "update444444", method = RequestMethod.GET)
+    @Transactional
+    public String update444444(String name) throws InterruptedException {
+        teacherMapper.updateA(name);
+        System.out.println("AAAAAAAAAAAAAAAAAA");
+        Thread.sleep(5000);
+        return "two";
+    }
+
+    /*
+     */
+    @RequestMapping(value = "update555555", method = RequestMethod.GET)
+    @Transactional
+    public String update555555(Integer age) throws InterruptedException {
+        teacherMapper.updateN(age);
+        System.out.println("BBBBBBBBBBBBBBBBB");
+        Thread.sleep(5000);
+        return "update2";
+    }
+
     @RequestMapping(value = "forup2", method = RequestMethod.GET)
     @Transactional
     public String forup2(String name) throws InterruptedException {
@@ -119,6 +163,17 @@ public class TestController {
         // TODO 对于数字索引字段而言，如果存在查询语句对此索引加锁(不管此索引字段是否存在)，都会被阻塞
         teacherMapper.insertId(id);
         System.out.println("eeeeeeeeeeee");
+        Thread.sleep(5000);
+        return "two";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    @Transactional
+    public String delete(Integer id) throws InterruptedException {
+        // TODO 对于数字索引字段而言，如果存在查询语句对此索引加锁(不管此索引字段是否存在)，都会被阻塞
+        teacherMapper.delete(id);
+        System.out.println("dddddddddddddd");
+        Thread.sleep(5000);
         return "two";
     }
 
@@ -126,8 +181,8 @@ public class TestController {
     @Transactional
     public String forup7(String name) throws InterruptedException {
         teacherMapper.updateByName(name);
+        System.out.println("uuuuuuuuuuuuuu");
         Thread.sleep(5000);
-        System.out.println("forup7");
         return "two";
     }
 
@@ -151,10 +206,11 @@ public class TestController {
     @Transactional
     public String update1(Integer id) throws InterruptedException {
         // TODO 两个事务中如果存在交叉更新，则会出现死锁异常
-        teacherMapper.update(4);
+        System.out.println("aaaaaaaaa");
+        teacherMapper.updateAge("aaa");
         System.out.println("fffffffff");
-        Thread.sleep(3000);
-        teacherMapper.update(1);
+        Thread.sleep(10000);
+        System.out.println("ccccccccc");
         return "two";
     }
 
@@ -168,11 +224,11 @@ public class TestController {
     }
 
     @RequestMapping(value = "update2", method = RequestMethod.GET)
-    @Transactional
     public String update2(Integer id) throws InterruptedException {
+        System.out.println("bbbbbbbbbb");
         teacherMapper.update(1);
         System.out.println("xxxxxxxxxx");
-        teacherMapper.update(4);
+        Thread.sleep(5000);
         return "two";
     }
 

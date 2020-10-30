@@ -36,5 +36,16 @@ public interface TeacherMapper {
     public TastJob selectById(@Param("id") Integer id);
 
     public TastJob seeee(@Param("id") Integer id);
+
+    public Integer updateAge(@Param("name") String name);
+
+    public Integer updateName(@Param("id") Integer name);
+
+    public Integer delete(@Param("id") Integer id);
+
+    public Integer updateN(@Param("age") Integer age);
+
+    public Integer updateA(@Param("name") String name);
+
 }
 

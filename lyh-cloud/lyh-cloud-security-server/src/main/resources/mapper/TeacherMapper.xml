@@ -41,4 +41,20 @@
     <update id="updateByName">
         update teacher set age = 100 where name in (#{name})
     </update>
+
+    <update id="updateAge">
+        update teacher set name = 'asdadasdasdasd' where age = #{name}
+    </update>
+    <update id="updateName">
+        update teacher set age = age + 1 where age = #{id}
+    </update>
+    <update id="updateN">
+        update teacher set age = 6666 where age = #{age}
+    </update>
+    <update id="updateA">
+        update teacher set age = 345 where name = #{name}
+    </update>
+    <delete id="delete">
+        delete from teacher where id = #{id}
+    </delete>
 </mapper>

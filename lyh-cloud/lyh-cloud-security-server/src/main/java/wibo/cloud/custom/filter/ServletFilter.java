@@ -38,7 +38,7 @@ public class ServletFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("----------已经进入方法了-----------");
+        //System.out.println("----------已经进入方法了-----------");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
