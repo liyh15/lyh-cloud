@@ -5,8 +5,6 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSONObject;
-
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +59,8 @@ public class TiexinMedical {
         registerRequest.header("Cookie", cookie);
         Boolean isEnd = true;
         List<TimeBean> timeBeanList = null;
-
+        int a = 1;
+        long st = System.currentTimeMillis();
         while (isEnd) {
             List<ArrangeResult> Result = JSONObject.parseObject(arrangeRequest.execute().body(), ArrangeResp.class).getResult();
             if (CollUtil.isNotEmpty(Result)) {
@@ -103,6 +102,12 @@ public class TiexinMedical {
                     }
                 }
             }
+            if ((System.currentTimeMillis() - st) >= 1000) {
+                st = System.currentTimeMillis();
+                System.out.println(a);
+                a = 0;
+            }
+            a = a + 1;
         }
     }
 }
