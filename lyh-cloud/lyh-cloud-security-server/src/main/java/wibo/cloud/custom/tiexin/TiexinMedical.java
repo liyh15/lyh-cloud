@@ -64,7 +64,7 @@ public class TiexinMedical {
         while (isEnd) {
             List<ArrangeResult> Result = JSONObject.parseObject(arrangeRequest.execute().body(), ArrangeResp.class).getResult();
             if (CollUtil.isNotEmpty(Result)) {
-                ArrangeResult result = Result.get(1);
+                ArrangeResult result = Result.get(0);
                 if (result.getAvailablenum().compareTo(0) > 0) {
                     // 有剩余的名额
                     timeMap.put("arrangeId", result.getArrangeID());
