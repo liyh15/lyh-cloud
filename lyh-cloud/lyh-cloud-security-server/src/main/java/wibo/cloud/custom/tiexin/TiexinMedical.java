@@ -93,6 +93,11 @@ public class TiexinMedical {
                         doctorRegOrder.setArrangeId(result.getArrangeID());
                         doctorRegOrder.setModeId(result.getModeId());
                         doctorRegOrder.setRegisterDate(result.getRegisterdate());
+                        doctorRegOrder.setSecurityDeposit(result.getSecurityDeposit());
+                        doctorRegOrder.setGhFee(result.getGhFee());
+                        doctorRegOrder.setAllFee(result.getAllFee());
+                        doctorRegOrder.setAvailablenum(result.getAvailablenum());
+                        doctorRegOrder.setUnOpened(result.getUnOpened());
                         System.out.println(JSONObject.toJSONString(doctorRegOrder));
                         registerMap.put("doctorRegOrder", JSONObject.toJSONString(doctorRegOrder));
                         registerMap.put("ghFormCon", registerData2);
