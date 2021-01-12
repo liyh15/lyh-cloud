@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @Date 2021/1/11 11:54
  * @Created by lyh
  */
+@Slf4j
 public class TiexinMedical {
 
     private static String registerUrl = "https://appoint.yihu.com/appoint/do/registerInfo/register";
@@ -31,10 +33,11 @@ public class TiexinMedical {
 
     // private static String registerData2 = "[{\"keyValue\":\"南京市雨花台区万科金色里程6栋911室\",\"keyName\":\"familyaddress\"},{\"keyValue\":\"\",\"keyName\":\"name\"},{\"keyValue\":\"\",\"keyName\":\"ClinicCard\"},{\"keyValue\":\"320***********7980\",\"keyName\":\"CardNo\"},{\"keyValue\":\"2\",\"keyName\":\"sex\"},{\"keyValue\":\"18851048456\",\"keyName\":\"mobile\"},{\"keyValue\":\"1\",\"keyName\":\"cardtype\"},{\"keyValue\":\"56471\",\"keyName\":\"cmb_disease\"},{\"keyValue\":\"55337\",\"keyName\":\"cmb_disease\"},{\"keyValue\":\"体检\",\"keyName\":\"cmb_diseaseName\"}]\n";
 
+    // TODO cookie前一天需要更换一下
     private static String cookie = "_SysTrackUUID=03185401801; jkzlAn_uuid=B4F46C4F-C6E2-4162-BEDF-90441E6B318E; jkzlAn_p=-1; jkzlAn_c=-1; _YyghSysTrackUUID=03185524128; HomeTemplateYiHu=%7B%22Code%22%3A10000%2C%22Message%22%3A%22%u6DFB%u52A0%u6210%u529F%22%2C%22Data%22%3A%7B%22Result%22%3A%5B%7B%22backColor%22%3A%22%22%2C%22backImg%22%3A%22%22%2C%22id%22%3A2691%2C%22insertTime%22%3A%222019-03-05%2010%3A10%3A07.0%22%2C%22jkzx%22%3A1%2C%22microWebId%22%3A14968%2C%22myzx%22%3A1%2C%22orgId%22%3A1091777%2C%22state%22%3A1%2C%22style%22%3A1%2C%22styleColor%22%3A%22133%2C187%2C215%3B88%2C182%2C230%3B82%2C161%2C202%22%2C%22template%22%3A5%2C%22transparency%22%3A%220%22%2C%22userBackImg%22%3A0%7D%5D%7D%7D; logintype=62; loginprovinceid=0; logincityid=0; BaseDoctorUid=0; BaseUserType=0; TOKEN_EE70CAEEDC43507F65ED1DBAE1FB8D5B=221E5D7E293A4297A4106292858E33BC; TOKEN_3D656A6DD6232C9C5B3CED6A1D327652=BBBF79487B1F424A8A12F4E0769BD962; jkzlAn_sid=9604F128-752C-492A-A23A-A3FD23ADCECB; jkzlAn_userid=122411285; YiHu_OpenId=eyJPcGVuSUQiOiJvZmY2dHMtUFg0aV9FcEUxZmZaakI5aVJva0drIiwiU2VjU3RyIjoiQ0NFRjI1NjJBMzQ5MTM1QjMyODY3OENCN0M4OUNDQ0EifQ%3D%3D; loginid=off6ts-PX4i_EpE1ffZjB9iRokGk; OpenID=off6ts-PX4i_EpE1ffZjB9iRokGk; LoginChannel=1000031; YiHu_UserJosn=eyJBY2NvdW50U24iOiIxMjI0MTEyODUiLCJDYXJkTnVtYmVyIjoiMjA1MjQxMDEwNiIsIkxvZ2luSWQiOiJvZmY2dHMtUFg0aV9FcEUxZmZaakI5aVJva0drIiwiVXNlck5hbWUiOiIiLCJTZWNTdHIiOiIzOTY4NjI0QTczODlBODI3MkU4OTQwNkE3Nzk3OEUyNCJ9; jkzlAn_channelid=1000031; jkzlAn_utm_source=0.0.h.1026.bus010.0__0.0.h.1026.bus010.0; jkzlAn_ct=1610351720353";
 
-    public static void main(String[] args) {
 
+    public static void start() {
 
         DoctorRegOrder doctorRegOrder = JSONObject.parseObject(registerData1, DoctorRegOrder.class);
         Map<String, Object> timeMap = new HashMap<>();
@@ -59,17 +62,19 @@ public class TiexinMedical {
         registerRequest.header("Cookie", cookie);
         Boolean isEnd = true;
         List<TimeBean> timeBeanList = null;
-        System.out.println("启动成功---");
+        log.error("开启成功---");
         while (isEnd) {
             List<ArrangeResult> Result = JSONObject.parseObject(arrangeRequest.execute().body(), ArrangeResp.class).getResult();
             if (CollUtil.isNotEmpty(Result)) {
                 ArrangeResult result = Result.get(0);
                 if (result.getAvailablenum().compareTo(0) > 0) {
+                    log.error("已经进入了一层{}", result);
                     // 有剩余的名额
                     timeMap.put("arrangeId", result.getArrangeID());
                     HttpResponse httpResponse = timeRequest.form(timeMap).execute();
                     String tokenResult = httpResponse.body();
                     TimeBeanResp timeBean = JSONObject.parseObject(tokenResult, TimeBeanResp.class);
+                    log.error("已经进入了二层{}", timeBean.getResult().size());
                     if (ObjectUtil.isNotNull(timeBean) && CollUtil.isNotEmpty(timeBeanList = timeBean.getResult())) {
                         TimeBean time = timeBeanList.get(0);
                         // 设置排号时间
@@ -100,12 +105,16 @@ public class TiexinMedical {
                         registerMap.put("doctorRegOrder", JSONObject.toJSONString(doctorRegOrder));
                         registerMap.put("ghFormCon", registerData2);
                         HttpResponse registerResponse = registerRequest.form(registerMap).execute();
-                        System.out.println(JSONObject.toJSONString(doctorRegOrder));
-                        System.out.println(registerResponse);
+                        log.error("已经进入了三层{}", doctorRegOrder);
+                        log.error("已经进入了终层{}", registerResponse);
                         isEnd = false;
                     }
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        start();
     }
 }
