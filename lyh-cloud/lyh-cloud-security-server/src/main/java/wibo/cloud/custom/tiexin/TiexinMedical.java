@@ -59,8 +59,7 @@ public class TiexinMedical {
         registerRequest.header("Cookie", cookie);
         Boolean isEnd = true;
         List<TimeBean> timeBeanList = null;
-        int a = 1;
-        long st = System.currentTimeMillis();
+        System.out.println("启动成功---");
         while (isEnd) {
             List<ArrangeResult> Result = JSONObject.parseObject(arrangeRequest.execute().body(), ArrangeResp.class).getResult();
             if (CollUtil.isNotEmpty(Result)) {
@@ -73,7 +72,6 @@ public class TiexinMedical {
                     TimeBeanResp timeBean = JSONObject.parseObject(tokenResult, TimeBeanResp.class);
                     if (ObjectUtil.isNotNull(timeBean) && CollUtil.isNotEmpty(timeBeanList = timeBean.getResult())) {
                         TimeBean time = timeBeanList.get(0);
-                        System.out.println(time);
                         // 设置排号时间
                         /*
                           获取安排可以拿到的值
@@ -108,12 +106,6 @@ public class TiexinMedical {
                     }
                 }
             }
-            if ((System.currentTimeMillis() - st) >= 1000) {
-                st = System.currentTimeMillis();
-                System.out.println(a);
-                a = 0;
-            }
-            a = a + 1;
         }
     }
 }
