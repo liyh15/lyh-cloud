@@ -64,7 +64,7 @@ public class TiexinMedical {
         while (isEnd) {
             List<ArrangeResult> Result = JSONObject.parseObject(arrangeRequest.execute().body(), ArrangeResp.class).getResult();
             if (CollUtil.isNotEmpty(Result)) {
-                ArrangeResult result = Result.get(0);
+                ArrangeResult result = Result.get(1);
                 if (result.getAvailablenum().compareTo(0) > 0) {
                     // 有剩余的名额
                     timeMap.put("arrangeId", result.getArrangeID());
@@ -94,14 +94,15 @@ public class TiexinMedical {
                         doctorRegOrder.setModeId(result.getModeId());
                         doctorRegOrder.setRegisterDate(result.getRegisterdate());
                         doctorRegOrder.setSecurityDeposit(result.getSecurityDeposit());
+                        doctorRegOrder.setGhfeeway(result.getGhfeeway());
                         doctorRegOrder.setGhFee(result.getGhFee());
                         doctorRegOrder.setAllFee(result.getAllFee());
                         doctorRegOrder.setAvailablenum(result.getAvailablenum());
                         doctorRegOrder.setUnOpened(result.getUnOpened());
-                        System.out.println(JSONObject.toJSONString(doctorRegOrder));
                         registerMap.put("doctorRegOrder", JSONObject.toJSONString(doctorRegOrder));
                         registerMap.put("ghFormCon", registerData2);
                         HttpResponse registerResponse = registerRequest.form(registerMap).execute();
+                        System.out.println(JSONObject.toJSONString(doctorRegOrder));
                         System.out.println(registerResponse);
                         isEnd = false;
                     }
