@@ -30,12 +30,13 @@ public class MyPlugin implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         MetaObject metaStatementHanler = SystemMetaObject.forObject(statementHandler);
-        Object object = statementHandler;
+
         while (metaStatementHanler.hasGetter("h")) {
-            object = metaStatementHanler.getValue("h");
-            metaStatementHanler = SystemMetaObject.forObject(object);
+            Object plugin = metaStatementHanler.getValue("h");
+            statementHandler = (StatementHandler) SystemMetaObject.forObject(plugin).getValue("target");
+            metaStatementHanler = SystemMetaObject.forObject(statementHandler);
         }
-        statementHandler = (StatementHandler) object;
+
         String sql = (String) metaStatementHanler.getValue("delegate.boundSql.sql");
         SqlSession sqlSession = null;
 

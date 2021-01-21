@@ -1,5 +1,7 @@
 package wibo.cloud.custom.config;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -10,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 
 
 import java.sql.Connection;
+import java.util.Map;
 
 /**
  * @Classname PagePlugin
@@ -35,14 +38,35 @@ public class PagePlugin implements Interceptor {
             statementHandler = (StatementHandler) SystemMetaObject.forObject(plugin).getValue("target");
             metaStatementHanler = SystemMetaObject.forObject(statementHandler);
         }
-
-        String sql = (String) metaStatementHanler.getValue("delegate.boundSql.sql");
-        SqlSession sqlSession = null;
-
-        log.error("PagePlugin:【" + sql + "】");
-        log.error("PagePlugin:【" + metaStatementHanler.getValue("delegate.boundSql.parameterObject") + "】");
+        BoundSql boundSql = (BoundSql) metaStatementHanler.getValue("delegate.boundSql");
+        String sql = boundSql.getSql();
+        SqlSession sqlSession;
+        log.error("PagePlugin:【" + boundSql.getSql() + "】");
+        log.error("PagePlugin:【" + boundSql.getParameterObject() + "】");
+        log.error("PagePlugin:【" + boundSql.getParameterMappings() + "】");
+        PageTest pageTest = getPageTest(boundSql.getParameterObject());
+        if (ObjectUtil.isNotNull(pageTest)) {
+            Integer page = (pageTest.getCurrent() - 1) * pageTest.getSize();
+            sql = "SELECT * FROM (" + sql + ") data limit " + page + "," + pageTest.getSize();
+            metaStatementHanler.setValue("delegate.boundSql.sql", sql);
+        }
         Object obj = invocation.proceed();
         return obj;
+    }
 
+    public PageTest getPageTest(Object paramObject) {
+        if (ObjectUtil.isNotNull(paramObject)) {
+            if (paramObject instanceof PageTest) {
+                return (PageTest) paramObject;
+            } else if (paramObject instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) paramObject;
+                for (Object k : map.values()) {
+                    if (k instanceof PageTest) {
+                        return (PageTest) k;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
