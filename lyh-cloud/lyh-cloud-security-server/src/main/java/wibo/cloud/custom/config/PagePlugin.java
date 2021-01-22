@@ -1,6 +1,5 @@
 package wibo.cloud.custom.config;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -9,7 +8,7 @@ import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSession;
-
+import org.mybatis.spring.SqlSessionTemplate;
 
 import java.sql.Connection;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class PagePlugin implements Interceptor {
         }
         BoundSql boundSql = (BoundSql) metaStatementHanler.getValue("delegate.boundSql");
         String sql = boundSql.getSql();
-        SqlSession sqlSession;
+        SqlSessionTemplate sqlSession;
         log.error("PagePlugin:【" + boundSql.getSql() + "】");
         log.error("PagePlugin:【" + boundSql.getParameterObject() + "】");
         log.error("PagePlugin:【" + boundSql.getParameterMappings() + "】");
