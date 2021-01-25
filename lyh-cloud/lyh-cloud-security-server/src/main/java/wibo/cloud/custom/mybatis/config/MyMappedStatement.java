@@ -3,6 +3,7 @@ package wibo.cloud.custom.mybatis.config;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @Classname MyMappedConfig
  * @Description 对应每个mapper每个sql语句的配置
@@ -23,11 +24,15 @@ public class MyMappedStatement {
     // 返回类型
     private Object resultType;
 
-    // 参数类型
+    // 入参类型
     private Object paramType;
 
-    // 拥有参数集合
+    // 属性集合
+    private Map<String, String> attributeMap;
+
+    // 拥有参数集合(这个需要动态生成，用于设置参数时使用)
     private List<ParamBean> paramBeanList;
 
-
+    // 参数名集合，Sql所有参数汇总
+    private List<ParamNameBean> paramNameBeanList;
 }

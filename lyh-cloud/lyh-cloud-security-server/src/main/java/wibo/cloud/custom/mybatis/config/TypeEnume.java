@@ -11,4 +11,20 @@ public enum  TypeEnume {
     DELETE,
     SELECT,
     UPDATE;
+
+    public static TypeEnume getTypeEnume(String name) {
+        if (name.equals("insert")) {
+             return INSERT;
+        }
+        if (name.equals("delete")) {
+            return DELETE;
+        }
+        if (name.equals("update")) {
+            return UPDATE;
+        }
+        if (name.equals("select")) {
+            return SELECT;
+        }
+        return null;
+    }
 }
