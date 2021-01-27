@@ -2,6 +2,7 @@ package wibo.cloud.custom.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import wibo.cloud.common.pojo.Student;
+import wibo.cloud.common.pojo.Teacher;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface StudentMapper {
     public Integer insert(@Param("list") List<Student> student);
 
     public List<Student> select();
+
+    public List<Teacher> selectBatch(List<Integer> list, String name, List<Integer> age);
 }
 

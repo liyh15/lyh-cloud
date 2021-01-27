@@ -15,8 +15,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import wibo.cloud.common.pojo.Teacher;
 import wibo.cloud.custom.mybatis.config.MapperConfig;
+import wibo.cloud.custom.mybatis.config.MyMappedStatement;
 import wibo.cloud.custom.mybatis.config.TypeEnume;
-
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @Classname MyMyBatisConfig
@@ -41,6 +39,8 @@ public class MyMyBatisConfig implements InitializingBean {
 
     @Autowired
     private MapperConfig mapperConfig;
+
+    private static Map<String, MyMappedStatement> myMappedStatementMap = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -110,12 +110,15 @@ public class MyMyBatisConfig implements InitializingBean {
                 if (StringUtil.isBlank(id)) {
                     throw new Exception(nameSpace + ":" +  elem.getText() +  " id is null");
                 }
-
-                // 获取SQL标签的内容
-                String sql = elem.getText();
-                // 获取标签中的功能标签
-                List<Element> functionElement = elem.elements();
-
+                // 判断查询标签是否有返回类型
+                if (typeEnume.equals(TypeEnume.SELECT)) {
+                    if (!attributeMap.containsKey("resultType")) {
+                        throw new Exception(nameSpace + ":" +  elem.getText() +  " resultType is null");
+                    }
+                }
+                nameSpace += "." +id;
+                MyMappedStatement myMappedStatement = new MyMappedStatement(typeEnume, nameSpace, attributeMap, elem);
+                myMappedStatementMap.put(nameSpace, myMappedStatement);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,8 +127,9 @@ public class MyMyBatisConfig implements InitializingBean {
 
 
 
-    public static void main(String[] args) {
-        Pattern pattern1 = Pattern.compile("\\$\\{(.*)\\}");
+    public static void main(String[] args) throws Exception {
+        xmlTest();
+       /* Pattern pattern1 = Pattern.compile("\\$\\{(.*)\\}");
         String a = "asdasdasdasd${aaa}asdaa${sdasd}asds";
         Pattern regex = Pattern.compile("\\$\\{([^}]*)\\}");
         Matcher matcher = regex.matcher(a);
@@ -133,7 +137,7 @@ public class MyMyBatisConfig implements InitializingBean {
         StringBuilder sql = new StringBuilder();
         while(matcher.find()) {
             System.out.println(matcher.group(1));
-        }
+        }*/
     }
 
     public static void update() {

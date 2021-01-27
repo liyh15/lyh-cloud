@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="wibo.cloud.custom.mapper.StudentMapper">
-    <update id="update">
-        update student set name = 'ooo' where id = 1
-    </update>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into
-        student(`name`)
-        values
-        <foreach collection="list" separator="," item="s">
-            (#{s.name})
+    <select id="selectBatch" resultType="wibo.cloud.common.pojo.Student">
+        select * from student where
+        age in
+        <foreach collection="age" item="aaa" separator = "," open="(" close=")">
+            <foreach collection="age" item="aaa" separator = "," open="(" close=")">
+                <foreach collection="age" item="aaa" separator = "," open="(" close=")">
+                    <foreach collection="age" item="aaa" separator = "," open="(" close=")">
+                        #{aaa}
+                    </foreach>
+                </foreach>
+            </foreach>
         </foreach>
-    </insert>
-    <select id="select" resultType = "wibo.cloud.common.pojo.Student">
-        select * from student where name = #{name}
+        <if test="list != null and list.size() > 0">
+            and id in
+            <foreach collection="list" item="aaa" separator = "," open="(" close=")">
+                #{aaa}
+            </foreach>
+        </if>
+        and name = #{name}
     </select>
 </mapper>
