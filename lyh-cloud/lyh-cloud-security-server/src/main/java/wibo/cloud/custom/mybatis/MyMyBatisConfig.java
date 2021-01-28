@@ -118,6 +118,7 @@ public class MyMyBatisConfig implements InitializingBean {
                 }
                 nameSpace += "." +id;
                 MyMappedStatement myMappedStatement = new MyMappedStatement(typeEnume, nameSpace, attributeMap, elem);
+
                 myMappedStatementMap.put(nameSpace, myMappedStatement);
             }
         } catch (Exception e) {

@@ -5,14 +5,17 @@
         select * from student where
         age in
         <foreach collection="age" item="aaa" separator = "," open="(" close=")">
-            <foreach collection="age" item="aaa" separator = "," open="(" close=")">
-                <foreach collection="age" item="aaa" separator = "," open="(" close=")">
-                    <foreach collection="age" item="aaa" separator = "," open="(" close=")">
-                        #{aaa}
-                    </foreach>
-                </foreach>
+           asdasdasd
+            <foreach collection="aaa" item="bbb" separator = "," open="(" close=")">
             </foreach>
+            <foreach collection="aaa.age" item="bbb" separator = "," open="(" close=")">
+            </foreach>
+            asdasdasd
         </foreach>
+
+
+
+
         <if test="list != null and list.size() > 0">
             and id in
             <foreach collection="list" item="aaa" separator = "," open="(" close=")">

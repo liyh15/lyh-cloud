@@ -1,6 +1,8 @@
 package wibo.cloud.custom.mybatis.config;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import org.dom4j.Attribute;
 import org.dom4j.Element;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +35,49 @@ public class FunctionElement {
      */
     private Element element;
 
+    /**
+     *  复制标签类
+     * @param
+     * @return 
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2021/1/28 17:50
+     */ 
+    public FunctionElement copyElement() {
+        Element copyElement =  element.createCopy();
+        FunctionElement element = new FunctionElement(copyElement);
+        element.setParentElement(parentElement.copyElement());
+        buildChild(element);
+        return element;
+    }
+
+    private void buildChild(FunctionElement copyElement) {
+        List<Element> elementList = copyElement.elements();
+        if (CollUtil.isNotEmpty(elementList)) {
+            for (Element element : elementList) {
+                FunctionElement functionElement = new FunctionElement(element);
+                functionElement.setParentElement(copyElement);
+                // 设置功能标签类型
+                functionElement.setTypeEnum(MyElementTypeEnum.getMyElementTypeEnum(element.getName()));
+                // 添加功能标签的子对象
+                copyElement.addChilElement(functionElement);
+                buildChild(functionElement);
+            }
+        }
+    }
+
+    public Element getElement() {
+        return element;
+    }
 
     public String getText() {
         return element.getText();
+    }
+
+    public String getAttributeValue(String name) {
+        Attribute attribute = element.attribute(name);
+        return ObjectUtil.isNull(attribute) ? null : attribute.getValue();
     }
 
     public List elements() {
