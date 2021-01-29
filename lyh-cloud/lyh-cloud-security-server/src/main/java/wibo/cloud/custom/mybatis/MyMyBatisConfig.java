@@ -2,6 +2,7 @@ package wibo.cloud.custom.mybatis;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import io.swagger.models.auth.In;
 import jodd.util.StringUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.dom4j.Attribute;
@@ -15,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import wibo.cloud.common.pojo.Teacher;
 import wibo.cloud.custom.mybatis.config.MapperConfig;
+import wibo.cloud.custom.mybatis.config.MyBoundSql;
 import wibo.cloud.custom.mybatis.config.MyMappedStatement;
 import wibo.cloud.custom.mybatis.config.TypeEnume;
 import java.io.File;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @Classname MyMyBatisConfig
@@ -119,6 +123,8 @@ public class MyMyBatisConfig implements InitializingBean {
                 nameSpace += "." +id;
                 MyMappedStatement myMappedStatement = new MyMappedStatement(typeEnume, nameSpace, attributeMap, elem);
 
+                Element element1 = elem.createCopy();
+
                 myMappedStatementMap.put(nameSpace, myMappedStatement);
             }
         } catch (Exception e) {
@@ -127,18 +133,33 @@ public class MyMyBatisConfig implements InitializingBean {
     }
 
 
-
     public static void main(String[] args) throws Exception {
         xmlTest();
+        MyMappedStatement statement = myMappedStatementMap.get("wibo.cloud.custom.mapper.StudentMapper.selectBatch");
+        Map<String, Object> map = new HashMap<>();
+        List<Integer> aaa = new ArrayList<>();
+        aaa.add(1);
+        aaa.add(2);
+        aaa.add(3);
+        List<Integer> bbb = new ArrayList<>();
+        bbb.add(4);
+        bbb.add(5);
+        bbb.add(6);
+        List<List<Integer>> ccc = new ArrayList<>();
+        ccc.add(aaa);
+        ccc.add(bbb);
+        map.put("age", ccc);
+        map.put("name", "name");
+        MyBoundSql.buildBoundSql(map, statement);
+
+
        /* Pattern pattern1 = Pattern.compile("\\$\\{(.*)\\}");
-        String a = "asdasdasdasd${aaa}asdaa${sdasd}asds";
+        String a = "asdasdasdasd#{aaa}asdaa#{sdasd}asds";
         Pattern regex = Pattern.compile("\\$\\{([^}]*)\\}");
         Matcher matcher = regex.matcher(a);
-
-        StringBuilder sql = new StringBuilder();
-        while(matcher.find()) {
-            System.out.println(matcher.group(1));
-        }*/
+        String b = "aaa";
+        a = a.replaceAll("#\\{"+b+"}","{aaa}");
+        System.out.println(a);*/
     }
 
     public static void update() {

@@ -36,7 +36,7 @@ public class FunctionElement {
     private Element element;
 
     /**
-     *  复制标签类
+     *  复制本类
      * @param
      * @return 
      * @throws
@@ -47,7 +47,7 @@ public class FunctionElement {
     public FunctionElement copyElement() {
         Element copyElement =  element.createCopy();
         FunctionElement element = new FunctionElement(copyElement);
-        element.setParentElement(parentElement.copyElement());
+        element.setParentElement(parentElement);
         buildChild(element);
         return element;
     }
@@ -65,6 +65,14 @@ public class FunctionElement {
                 buildChild(functionElement);
             }
         }
+    }
+
+    public void setText(String text) {
+        element.setText(text);
+    }
+
+    public String getStringValue() {
+        return element.getStringValue();
     }
 
     public Element getElement() {

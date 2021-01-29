@@ -5,23 +5,10 @@
         select * from student where
         age in
         <foreach collection="age" item="aaa" separator = "," open="(" close=")">
-           asdasdasd
             <foreach collection="aaa" item="bbb" separator = "," open="(" close=")">
+                #{bbb}
             </foreach>
-            <foreach collection="aaa.age" item="bbb" separator = "," open="(" close=")">
-            </foreach>
-            asdasdasd
         </foreach>
-
-
-
-
-        <if test="list != null and list.size() > 0">
-            and id in
-            <foreach collection="list" item="aaa" separator = "," open="(" close=")">
-                #{aaa}
-            </foreach>
-        </if>
         and name = #{name}
     </select>
 </mapper>
