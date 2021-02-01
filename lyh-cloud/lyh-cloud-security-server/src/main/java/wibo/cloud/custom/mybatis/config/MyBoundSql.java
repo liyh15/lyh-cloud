@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.ToString;
 import org.dom4j.Element;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,38 +62,113 @@ public class MyBoundSql {
         Element rootElement = elementX.createCopy();
         List<FunctionElement> rootFunctionElementListList = new ArrayList<>();
         FunctionElement rootFunctionElement = new FunctionElement(rootElement);
-        addFunctionElement(rootFunctionElement, rootFunctionElementListList, true);
+        addFunctionElement(rootFunctionElement, true);
 
-        String text = rootElement.getText(); // 获取跟标签内容
+        // 处理子对象
+        List<ForeachDataBean> foreachDataBeanList = new ArrayList<>();
+        handleChildElement(rootFunctionElement.getChildElementList(), paramObject, foreachDataBeanList, paramValueMap, statement);
+
+        String text = rootElement.getStringValue(); // 获取跟标签内容
         Matcher matcherBody1 = regex1.matcher(text);
         Matcher matcherBody2 = regex2.matcher(text);
         while (matcherBody1.find()) {
             String paramName = matcherBody1.group(1);
             paramValueMap.put(paramName, getParamMapValue(paramObject, paramName, statement.getNameSpace()));
+            text = text.replaceAll("\\#\\{" + paramName + "}", "{" + paramName + "}");
         }
 
-        for (FunctionElement element : rootFunctionElementListList) {
-            // TODO 需要对每个Element应对各种类型做出判断
-            switch (element.getTypeEnum()) {
-                case FOREACH:
-                    List<ForeachDataBean> foreachDataBeanList = new ArrayList<>();
-                    handleForeach(element, paramObject, foreachDataBeanList, paramValueMap, statement);
-                    break;
-                case IF:
-                    break;
-                case WHERE:
-                    break;
-                case SET:
-                    break;
-                case TRIM:
-                    break;
-                default:
-                    break;
-            }
-        }
-        System.out.println(rootFunctionElement.getStringValue());
+        System.out.println(text);
         return null;
     }
+
+    /**
+     * 处理标签所有的子标签
+     * @param elementList
+     * @param paramObject
+     * @param foreachDataBeanList
+     * @return
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2021/1/28 14:58
+     */
+    private static void handleChildElement(List<FunctionElement> elementList, Object paramObject, List<ForeachDataBean> foreachDataBeanList, Map<String, Object> paramValueMap,
+                                           MyMappedStatement myMappedStatement) throws Exception {
+        if (CollUtil.isNotEmpty(elementList)) {
+            for (FunctionElement element : elementList) {
+                switch (element.getTypeEnum()) {
+                    case FOREACH:
+                        handleForeach(element, paramObject, foreachDataBeanList, paramValueMap, myMappedStatement);
+                        break;
+                    case IF:
+
+                        break;
+                    case WHERE:
+                        break;
+                    case SET:
+                        break;
+                    case TRIM:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 处理if标签
+     * @param element
+     * @param paramObject
+     * @param foreachDataBeanList
+     * @param paramValueMap
+     * @param myMappedStatement
+     * @return
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2021/2/1 15:26
+     */
+    private static void handleIf(FunctionElement element, Object paramObject, List<ForeachDataBean> foreachDataBeanList,  Map<String, Object> paramValueMap,
+                                 MyMappedStatement myMappedStatement) throws Exception {
+        String test = element.getAttributeValue("test");
+        if (StringUtil.isNotBlank(test)) {
+            char [] ts = test.toCharArray();
+            int length = ts.length;
+            int i = 0;
+            while (i < ts.length) {
+                char t = ts[i];
+                // 暂时只支持==; !=; >; <; >=; <=; and; or; (; );
+                switch (t) {
+                    case '=':
+                        break;
+                    case '!':
+                        break;
+                    case '>':
+                        break;
+                    case '<':
+                        break;
+                    case 'a':
+                        break;
+                    case 'o':
+                        break;
+                    case '(':
+                        // TODO 遇到左括号需要单独拎出来
+                        break;
+                    case ')':
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else {
+            throw new Exception(myMappedStatement.getNameSpace() + ": if test is empty");
+        }
+    }
+
+
+
 
     /**
      * 处理foreach功能标签，在处理foreach的时候，需要把遍历的对象传过去，还有整个xml的入参对象
@@ -141,7 +213,7 @@ public class MyBoundSql {
             // 处理所有子对象
             handleChildElement(functionElement.getChildElementList(), paramObject, dataBeanList, paramValueMap, myMappedStatement);
 
-            String text = functionElement.getStringValue(); // 获取跟标签内容
+            String text = functionElement.getStringValue(); // 获取根标签内容
             Matcher matcherBody1 = regex1.matcher(text);
             Matcher matcherBody2 = regex2.matcher(text);
             while (matcherBody1.find()) {
@@ -154,46 +226,14 @@ public class MyBoundSql {
             }
             allText.append(text).append(seperateStr);
         }
-        allText.append(closeStr);
         String lastTest = allText.toString();
         if (StringUtil.isNotBlank(seperateStr)) {
             lastTest = lastTest.substring(0, lastTest.length() - 1);
         }
+        lastTest += closeStr;
+        // 清除现有内容，由于setText不能覆盖子标签内容，导致子标签内容无法清除
+        element.clearContent();
         element.setText(lastTest);
-    }
-
-    /**
-     * 处理标签所有的子标签
-     * @param elementList
-     * @param paramObject
-     * @param foreachDataBeanList
-     * @return
-     * @throws
-     * @description
-     * @author liyuanhao
-     * @date 2021/1/28 14:58
-     */
-    private static void handleChildElement(List<FunctionElement> elementList, Object paramObject, List<ForeachDataBean> foreachDataBeanList, Map<String, Object> paramValueMap,
-                                           MyMappedStatement myMappedStatement) throws Exception {
-        if (CollUtil.isNotEmpty(elementList)) {
-            for (FunctionElement element : elementList) {
-                switch (element.getTypeEnum()) {
-                    case FOREACH:
-                        handleForeach(element, paramObject, foreachDataBeanList, paramValueMap, myMappedStatement);
-                        break;
-                    case IF:
-                        break;
-                    case WHERE:
-                        break;
-                    case SET:
-                        break;
-                    case TRIM:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }
 
     /**
@@ -205,7 +245,7 @@ public class MyBoundSql {
      * @author liyuanhao
      * @date 2021/1/26 11:07
      */
-    private static void addFunctionElement(FunctionElement rootElement, List<FunctionElement> rootFunctionElementListList, boolean isRoot) {
+    private static void addFunctionElement(FunctionElement rootElement, boolean isRoot) {
         List<Element> elementList = rootElement.elements();
         if (CollUtil.isNotEmpty(elementList)) {
             for (Element element : elementList) {
@@ -215,10 +255,7 @@ public class MyBoundSql {
                 functionElement.setTypeEnum(MyElementTypeEnum.getMyElementTypeEnum(element.getName()));
                 // 添加功能标签的子对象
                 rootElement.addChilElement(functionElement);
-                if (isRoot) {
-                    rootFunctionElementListList.add(functionElement);
-                }
-                addFunctionElement(functionElement,rootFunctionElementListList, false);
+                addFunctionElement(functionElement, false);
             }
         }
     }
@@ -237,7 +274,7 @@ public class MyBoundSql {
     private static DataBean getDataBean(String paramName, List<ForeachDataBean> foreachDataBeanList, Object paramObject, MyMappedStatement myMappedStatement) throws Exception {
         String paramRealName = null;
         Object objj = null;
-        String [] paramNames = paramName.split(".");
+        String [] paramNames = paramName.split("\\.");
         ForeachDataBean bean = getForeachDataBean(paramNames[0], foreachDataBeanList);
         if (ObjectUtil.isNull(bean)) {
             paramRealName = paramName;
@@ -287,7 +324,7 @@ public class MyBoundSql {
         }
         if (paramObjec instanceof Map) {
             Map<String, Object> paramMap = (Map<String, Object>) paramObjec;
-            String [] param = paramName.split(".");
+            String [] param = paramName.split("\\.");
             String paramHead = param[0]; // 这是参数头
             // 如果入参是Map格式
             if (!paramMap.containsKey(paramHead)) {

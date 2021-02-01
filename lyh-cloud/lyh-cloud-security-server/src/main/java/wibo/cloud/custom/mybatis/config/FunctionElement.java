@@ -71,6 +71,10 @@ public class FunctionElement {
         element.setText(text);
     }
 
+    public void clearContent() {
+        element.clearContent();
+    }
+
     public String getStringValue() {
         return element.getStringValue();
     }

@@ -145,9 +145,14 @@ public class MyMyBatisConfig implements InitializingBean {
         bbb.add(4);
         bbb.add(5);
         bbb.add(6);
+        List<Integer> eee = new ArrayList<>();
+        eee.add(4);
+        eee.add(5);
+        eee.add(6);
         List<List<Integer>> ccc = new ArrayList<>();
         ccc.add(aaa);
         ccc.add(bbb);
+        ccc.add(eee);
         map.put("age", ccc);
         map.put("name", "name");
         MyBoundSql.buildBoundSql(map, statement);

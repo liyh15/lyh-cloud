@@ -9,6 +9,8 @@
                 #{bbb}
             </foreach>
         </foreach>
-        and name = #{name}
+        <if test="name != null and name != ''">
+            and name >= #{name}
+        </if>
     </select>
 </mapper>
