@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.dom4j.Element;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,6 +138,7 @@ public class MyBoundSql {
             char [] ts = test.toCharArray();
             int length = ts.length;
             int i = 0;
+
             while (i < ts.length) {
                 char t = ts[i];
                 // 暂时只支持==; !=; >; <; >=; <=; and; or; (; );
@@ -155,6 +157,8 @@ public class MyBoundSql {
                         break;
                     case '(':
                         // TODO 遇到左括号需要单独拎出来
+                        IfTestBean bean = new IfTestBean(i, length);
+                        handleBracket(ts, bean, paramObject, foreachDataBeanList);
                         break;
                     case ')':
                         break;
@@ -167,8 +171,61 @@ public class MyBoundSql {
         }
     }
 
+    /**
+     * 处理带括号的, 当遇到左括号时会执行这个方法
+     * @param ts 数组
+     * @param bean 位置标识
+     * @return 0: true 1: false 2:异常
+     * @throws
+     * @description
+     * @author liyuanhao
+     * @date 2021/2/2 9:01
+     */
+    private static int handleBracket(char[] ts, IfTestBean bean, Object paramObject, List<ForeachDataBean> foreachDataBeanList) {
+        // 记录布尔值内容，0：true 1: false 2: and 3: or
+        Queue<Integer> queue = new LinkedList<>();
+        // 1：第一参数 2：比较符号 3：第二参数
+        int a = 1;
+        char lastParam;
+        StringBuilder startParam = new StringBuilder();
+        StringBuilder middle = new StringBuilder();
+        StringBuilder endParam = new StringBuilder();
+        while (bean.getStart() < bean.getLength()) {
+            char t = ts[bean.getStart()];
+            // 暂时只支持==; !=; >; <; >=; <=; =<; =>; and; or; (; );
+            switch (t) {
+                case '=':
 
-
+                    break;
+                case '!':
+                    break;
+                case '>':
+                    break;
+                case '<':
+                    break;
+                case 'a':
+                    break;
+                case 'n':
+                    break;
+                case 'd':
+                    break;
+                case 'o':
+                    break;
+                case 'r':
+                    break;
+                case '(':
+                    bean.addStart();
+                    int bool = handleBracket(ts, bean, paramObject, foreachDataBeanList);
+                    queue.offer(bool);
+                    break;
+                case ')':
+                    break;
+                default:
+                    break;
+            }
+        }
+        return 2;
+    }
 
     /**
      * 处理foreach功能标签，在处理foreach的时候，需要把遍历的对象传过去，还有整个xml的入参对象

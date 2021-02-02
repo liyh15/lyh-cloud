@@ -14,6 +14,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.support.TransactionTemplate;
 import wibo.cloud.common.pojo.Teacher;
 import wibo.cloud.custom.mybatis.config.MapperConfig;
 import wibo.cloud.custom.mybatis.config.MyBoundSql;
@@ -156,6 +157,7 @@ public class MyMyBatisConfig implements InitializingBean {
         map.put("age", ccc);
         map.put("name", "name");
         MyBoundSql.buildBoundSql(map, statement);
+
 
 
        /* Pattern pattern1 = Pattern.compile("\\$\\{(.*)\\}");
