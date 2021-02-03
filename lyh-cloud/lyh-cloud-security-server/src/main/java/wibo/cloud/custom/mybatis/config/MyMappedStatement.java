@@ -33,12 +33,6 @@ public class MyMappedStatement {
     // mapper标签
     private Element element;
 
-    // 匹配#{}
-    private static Pattern regex1 = Pattern.compile("\\#\\{([^#${}]*)\\}");
-
-    // 匹配${}
-    private static Pattern regex2 = Pattern.compile("\\$\\{([^#${}]*)\\}");
-
 
     public MyMappedStatement(TypeEnume typeEnume, String nameSpace, Map<String, String> attributeMap, Element element) {
         this.typeEnume = typeEnume;
@@ -49,6 +43,10 @@ public class MyMappedStatement {
 
     public Element getElement() {
         return element;
+    }
+
+    public String getAttribute(String name) {
+        return attributeMap.get(name);
     }
 
     public String getNameSpace() {

@@ -158,7 +158,7 @@ public class MyBoundSql {
                     case '(':
                         // TODO 遇到左括号需要单独拎出来
                         IfTestBean bean = new IfTestBean(i, length);
-                        handleBracket(ts, bean, paramObject, foreachDataBeanList);
+                        handleBracket(ts, bean, paramObject, foreachDataBeanList, myMappedStatement);
                         break;
                     case ')':
                         break;
@@ -181,12 +181,12 @@ public class MyBoundSql {
      * @author liyuanhao
      * @date 2021/2/2 9:01
      */
-    private static int handleBracket(char[] ts, IfTestBean bean, Object paramObject, List<ForeachDataBean> foreachDataBeanList) {
+    private static int handleBracket(char[] ts, IfTestBean bean, Object paramObject, List<ForeachDataBean> foreachDataBeanList, MyMappedStatement myMappedStatement) throws Exception {
         // 记录布尔值内容，0：true 1: false 2: and 3: or
         Queue<Integer> queue = new LinkedList<>();
         // 1：第一参数 2：比较符号 3：第二参数
         int a = 1;
-        char lastParam;
+        char lastParam = ' ';
         StringBuilder startParam = new StringBuilder();
         StringBuilder middle = new StringBuilder();
         StringBuilder endParam = new StringBuilder();
@@ -195,13 +195,100 @@ public class MyBoundSql {
             // 暂时只支持==; !=; >; <; >=; <=; =<; =>; and; or; (; );
             switch (t) {
                 case '=':
-
+                    if (a == 1) {
+                        if (startParam.length() == 0) {
+                            // 如果没有第一个参数
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '=' is locate error");
+                        }
+                        middle.append('=');
+                        a = 2;
+                        lastParam = '=';
+                    } else if (a == 2) {
+                        if (lastParam == '=' || lastParam == '!' || lastParam == '>' || lastParam == '>' || lastParam == ' ') {
+                            middle.append('=');
+                            a = 3;
+                        } else {
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world before '=' is error");
+                        }
+                    } else {
+                        throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '=' is locate error");
+                    }
                     break;
                 case '!':
+                    if (a == 1) {
+                        if (startParam.length() == 0) {
+                            // 如果没有第一个参数
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '!' is locate error");
+                        }
+                        middle.append('!');
+                        a = 2;
+                        lastParam = '!';
+                    } else if (a == 2 && lastParam == ' ') {
+                        middle.append('!');
+                        lastParam = '!';
+                    } else {
+                        throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '!' is locate error");
+                    }
                     break;
                 case '>':
+                    if (a == 1) {
+                        if (startParam.length() == 0) {
+                            // 如果没有第一个参数
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '>' is locate error");
+                        }
+                        middle.append('>');
+                        a = 2;
+                        lastParam = '>';
+                    } else if (a == 2 && (lastParam == '=' || lastParam == ' ')) {
+                        middle.append('>');
+                        a = 3;
+                    } else {
+                        throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '>' is locate error");
+                    }
                     break;
                 case '<':
+                    if (a == 1) {
+                        if (startParam.length() == 0) {
+                            // 如果没有第一个参数
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '<' is locate error");
+                        }
+                        middle.append('<');
+                        a = 2;
+                        lastParam = '<';
+                    } else if (a == 2 && (lastParam == '=' || lastParam == ' ')) {
+                        middle.append('<');
+                        a = 3;
+                    } else {
+                        throw new Exception(myMappedStatement.getNameSpace() + ": the if test world '<' is locate error");
+                    }
+                    break;
+                case ' ':
+                    if (a == 1 && lastParam != ' ') {
+                        lastParam = ' ';
+                        a = 2;
+                    } else if (a == 2) {
+                        // 判断判断符是否符合标准
+                        // 暂时只支持==; !=; >; <; >=; <=; =<; =>; and; or; (; );
+                        String mid = middle.toString();
+                        if ("==".equals(mid) || "!=".equals(mid) ||">".equals(mid) ||"<".equals(mid) ||
+                                ">=".equals(mid) ||"<=".equals(mid) ||"=<".equals(mid) ||"=>".equals(mid) ||"and".equals(mid) ||"or".equals(mid)) {
+                            a = 3;
+                        } else {
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world ' ' is locate error");
+                        }
+                    } else if (a == 3) {
+                        if (endParam.length() == 0) {
+                            // 如果没有第三个值
+                            throw new Exception(myMappedStatement.getNameSpace() + ": the if test world ' ' is locate error");
+                        }
+                        a = 1;
+                        String start = startParam.toString();
+                        String mid = middle.toString();
+                        String end = endParam.toString();
+                        startParam.delete(0, startParam.length());
+                        middle.delete(0, middle.length());
+                        endParam.delete(0, endParam.length());
+                    }
                     break;
                 case 'a':
                     break;
@@ -214,8 +301,9 @@ public class MyBoundSql {
                 case 'r':
                     break;
                 case '(':
+                    // TODO 还需要判断是不是方法
                     bean.addStart();
-                    int bool = handleBracket(ts, bean, paramObject, foreachDataBeanList);
+                    int bool = handleBracket(ts, bean, paramObject, foreachDataBeanList, myMappedStatement);
                     queue.offer(bool);
                     break;
                 case ')':
@@ -225,6 +313,15 @@ public class MyBoundSql {
             }
         }
         return 2;
+    }
+
+    private static Integer handleIfTest(String start, String middle, String end, Object paramObject,
+                                        List<ForeachDataBean> foreachDataBeanList, MyMappedStatement myMappedStatement) throws Exception {
+        // 暂时只支持==; !=; >; <; >=; <=; =<; =>; and; or; (; );
+        Object startBean = getDataBean(start, foreachDataBeanList, paramObject, myMappedStatement).getData();
+        Object endBean = getDataBean(end, foreachDataBeanList, paramObject, myMappedStatement).getData();
+
+        return null;
     }
 
     /**
@@ -335,7 +432,17 @@ public class MyBoundSql {
         ForeachDataBean bean = getForeachDataBean(paramNames[0], foreachDataBeanList);
         if (ObjectUtil.isNull(bean)) {
             paramRealName = paramName;
-            objj =  getParamMapValue(paramObject, paramRealName, myMappedStatement.getNameSpace());
+            if (StringUtil.isNotBlank(myMappedStatement.getAttribute("parameterType"))) {
+                String type = myMappedStatement.getAttribute("parameterType");
+                Class typeCls = Class.forName(type);
+                if (paramObject.getClass().equals(typeCls)) {
+                   objj =  paramObject;
+                } else {
+                    throw new Exception(myMappedStatement.getNameSpace() + "param's type is not equal paramterType");
+                }
+            } else {
+                objj =  getParamMapValue(paramObject, paramRealName, myMappedStatement.getNameSpace());
+            }
         } else {
             paramRealName = bean.getRealName() + (paramName.indexOf(".") == -1 ? "" : paramName.substring(paramName.indexOf(".") + 1));
             objj = bean.getData();
@@ -415,7 +522,7 @@ public class MyBoundSql {
                 }
             } else {
                 if (cls.isPrimitive()) {
-                    throw new Exception(nameSpace + " paramName is not exist: " + paramName);
+                    throw new Exception(nameSpace + " paramterType is not exist: " + paramName);
                 } else {
                     int index = 0;
                     while ((index + 1) <= param.length) {
