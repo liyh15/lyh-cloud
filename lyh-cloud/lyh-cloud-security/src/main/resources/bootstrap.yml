@@ -1,0 +1,47 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: security
+  # 配置中心
+  cloud:
+    config:
+      fail-fast: true  #表示失败重试
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: config #表示config-server的服务名
+  profiles:
+    active: dev  #表示默认的访问的配置为开发环境配置
+  main:
+    allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+    publisher-confirms: true
+    virtual-host: /
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://192.168.126.129:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
+    userName: root
+    password: 851535
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8762/eureka
+
+redis:
+  cluster:
+    nodes: 192.168.126.129:7001,192.168.126.129:7002,192.168.126.129:7003,192.168.126.129:7004,192.168.126.129:7005,192.168.126.129:7006
+    timeout: 60000
+    maxAttempts: 3
+    maxWaitMillis: 60000
+    maxTotal: 10
+    minIdle: 10
+    maxIdle: 10
