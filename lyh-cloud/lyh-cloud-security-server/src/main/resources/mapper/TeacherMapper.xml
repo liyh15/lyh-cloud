@@ -4,13 +4,13 @@
     <update id="update">
         update teacher set name = 'ooo' where id = #{id}
     </update>
-    <select id="forup" resultType="wibo.cloud.common.pojo.Theacher">
+    <select id="forup" resultType="wibo.cloud.common.pojo.Teacher">
        select * from teacher where name = #{name} for update
     </select>
-    <select id="forupId" resultType="wibo.cloud.common.pojo.Theacher">
+    <select id="forupId" resultType="wibo.cloud.common.pojo.Teacher" flushCache="true">
        select * from teacher where id = #{id} for update
     </select>
-    <resultMap id="base" type="wibo.cloud.common.pojo.Theacher">
+    <resultMap id="base" type="wibo.cloud.common.pojo.Teacher">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="age" property="age"/>
@@ -19,6 +19,12 @@
     <select id="selectById" resultMap="base">
          select * from teacher where id = #{id}
     </select>
+    <insert id="insertMii">
+          insert into teacher(`name`,age) values
+           <foreach collection="list" item="tea" separator = ",">
+              (#{tea.name},#{tea.age})
+           </foreach>
+    </insert>
 
     <insert id="insert">
         insert into teacher values (4,#{name},12)
@@ -27,15 +33,15 @@
         insert into teacher values (#{id},'aaaaaaaa',12)
     </insert>
 
-    <select id="select" resultType="wibo.cloud.common.pojo.Theacher">
+    <select id="select" resultType="wibo.cloud.common.pojo.Teacher">
        select * from teacher where id = #{id}
     </select>
 
-    <select id="selectN" resultType="wibo.cloud.common.pojo.Theacher">
+    <select id="selectN" resultType="wibo.cloud.common.pojo.Teacher">
        select * from teacher where name = #{name}
     </select>
     <select id="selectList" resultMap="base">
-        select sum(id),id from teacher
+        select * from teacher limit 0,100000
     </select>
 
     <update id="updateByName">
@@ -46,15 +52,30 @@
         update teacher set name = 'asdadasdasdasd' where age = #{name}
     </update>
     <update id="updateName">
-        update teacher set age = age + 1 where age = #{id}
+        update teacher set hign = 2 where age = #{id}
     </update>
     <update id="updateN">
-        update teacher set age = 6666 where age = #{age}
+        update teacher set top = 2 where age = #{age}
     </update>
     <update id="updateA">
-        update teacher set age = 345 where name = #{name}
+        update teacher set hign = 2 where name = #{name}
     </update>
     <delete id="delete">
         delete from teacher where id = #{id}
     </delete>
+    <select id="selectBatch" resultType="wibo.cloud.common.pojo.Teacher">
+        select * from teacher where
+        age in
+        <foreach collection="stList" item="st" separator = ",">
+            <foreach collection="st.age" item="aa" separator = "," open="(" close=")">
+                #{aa}
+            </foreach>
+        </foreach>
+        <if test="(name != null and name!='') and stList != null and stList.size() == stList.size()">
+            and name = #{name}
+        </if>
+    </select>
+    <select id="selectByPage" resultType="wibo.cloud.common.pojo.Teacher">
+         select * from teacher
+    </select>
 </mapper>

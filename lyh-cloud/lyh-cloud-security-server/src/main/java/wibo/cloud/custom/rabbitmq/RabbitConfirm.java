@@ -1,6 +1,7 @@
 package wibo.cloud.custom.rabbitmq;
 
 import com.rabbitmq.client.*;
+import org.apache.ibatis.session.SqlSession;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 public class RabbitConfirm {
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("192.168.56.140");
+        connectionFactory.setHost("192.168.126.129");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("lyh");
         connectionFactory.setPassword("123456");
@@ -29,27 +30,30 @@ public class RabbitConfirm {
 
         channel.confirmSelect();
         String message = "aaa";
+        // TODO 获取下一条消息的编号
+        System.out.println(channel.getNextPublishSeqNo());
         channel.basicPublish("ConfirmExchangeTest", "directQueueConfirm1111",true, MessageProperties.PERSISTENT_TEXT_PLAIN, (message).getBytes());
+        System.out.println(channel.getNextPublishSeqNo());
         channel.basicPublish("ConfirmExchangeTest", "directQueueConfirm1111",true, MessageProperties.PERSISTENT_TEXT_PLAIN, (message).getBytes());
+        System.out.println(channel.getNextPublishSeqNo());
         channel.basicPublish("ConfirmExchangeTest", "directQueueConfirm1111",true, MessageProperties.PERSISTENT_TEXT_PLAIN, (message).getBytes());
 
-        // TODO 这个只能保证消息发送到交换器，需要和mandatory配合保证消息发送到队列
+        // TODO 这个只能保证消息发送到交换器，需要和mandatory配合保证消息发送到队列，mandatory就是basicPublish第三个参数
        /* if (!channel.waitForConfirms()) {
             System.out.println("faild");
         }*/
+
         channel.addConfirmListener(new ConfirmListener() {
             @Override
             public void handleAck(long l, boolean b) throws IOException {
                 // TODO 表示消息发送成功
-                System.out.println(l);
-                System.out.println(b);
+                System.out.println("success" + l + b);
             }
 
             @Override
             public void handleNack(long l, boolean b) throws IOException {
                 // TODO 表示消息发送错误
-                System.out.println(l);
-                System.out.println(b);
+                System.out.println("fail" + l + b);
             }
         });
         TimeUnit.SECONDS.sleep(100000);

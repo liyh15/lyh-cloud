@@ -10,7 +10,7 @@ import java.util.concurrent.TimeoutException;
 public class RabbitMQTest {
     public static void main(String[] args) throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("10.11.1.188");
+        connectionFactory.setHost("192.168.126.129");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("lyh");
         connectionFactory.setPassword("123456");

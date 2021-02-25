@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException;
 public class RabbitMQReject {
     public static void main(String[] args) throws IOException, TimeoutException, InterruptedException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost("10.11.1.188");
+        connectionFactory.setHost("192.168.126.129");
         connectionFactory.setPort(5672);
         connectionFactory.setUsername("lyh");
         connectionFactory.setPassword("123456");
@@ -24,7 +24,7 @@ public class RabbitMQReject {
                 // channel.basicReject(envelope.getDeliveryTag(), true);
                 // TODO 表示拒绝消息并删除消息
                 // channel.basicReject(envelope.getDeliveryTag(), false);
-                // TODO 表示批量拒绝消息, 第二个参数为true
+                // TODO 表示批量拒绝消息, 第二个参数为true表示是否批量，第三个参数表示是否重回队列或者删除
                 channel.basicNack(envelope.getDeliveryTag(),true,true);
                 // TODO 表示请求rabbitmq重新发送一遍未确认的消息，如果为true，则可能发送到不同的消费者，为false分配给之前相同的消费者
                 //channel.basicRecover(true);

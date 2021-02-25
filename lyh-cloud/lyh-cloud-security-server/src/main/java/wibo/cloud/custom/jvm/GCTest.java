@@ -1,5 +1,8 @@
 package wibo.cloud.custom.jvm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Classname GCTest
  * @Description TODO
@@ -19,11 +22,17 @@ public class GCTest {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        test = new GCTest();
-        test = null;
+
+        List<GCTest> gcTests = new ArrayList<>();
+        for (int i = 0; i < 100000;i ++) {
+            GCTest test = new GCTest();
+            gcTests.add(test);
+        }
+        gcTests = null;
+        Thread.sleep(20000);
         System.gc();
-        Thread.sleep(2000);
-        if (test == null) {
+        Thread.sleep(10000000);
+       /* if (test == null) {
             System.out.println("test has dead");
         }  else {
             System.out.println("test has live");
@@ -34,6 +43,6 @@ public class GCTest {
             System.out.println("test has dead");
         }  else {
             System.out.println("test has live");
-        }
+        }*/
     }
 }

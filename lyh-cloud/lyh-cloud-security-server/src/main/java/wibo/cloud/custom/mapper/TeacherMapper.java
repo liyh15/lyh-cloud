@@ -1,9 +1,11 @@
 package wibo.cloud.custom.mapper;
 
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
+import wibo.cloud.common.pojo.STList;
 import wibo.cloud.common.pojo.TastJob;
-import wibo.cloud.common.pojo.Theacher;
+import wibo.cloud.common.pojo.Teacher;
+import wibo.cloud.custom.config.PageTest;
 
 import java.util.List;
 
@@ -17,23 +19,25 @@ public interface TeacherMapper {
 
     public Integer update(@Param("id") Integer id);
 
-    public Theacher forup(@Param("name") String name);
+    public Integer insertMii(@Param("list") List<Teacher> list);
+
+    public Teacher forup(@Param("name") String name);
 
     public Integer insert(@Param("name") String name);
 
     public Integer insertId(@Param("id") String id);
 
-    public Theacher forupId(@Param("id") String id);
+    public Teacher forupId(@Param("id") String id);
 
-    public Theacher select(@Param("id") Integer id);
+    public Teacher select(@Param("id") Integer id);
 
-    public Theacher selectN(@Param("name") String name);
+    public Teacher selectN(@Param("name") String name);
 
     public Integer updateByName(@Param("name") String name);
 
-    public List<Theacher> selectList();
+    public List<Teacher> selectList();
 
-    public TastJob selectById(@Param("id") Integer id);
+    public Teacher selectById(@Param("id") Integer id);
 
     public TastJob seeee(@Param("id") Integer id);
 
@@ -47,5 +51,8 @@ public interface TeacherMapper {
 
     public Integer updateA(@Param("name") String name);
 
+    public List<Teacher> selectBatch(@Param("stList") List<STList> stList, @Param("name") String name, int age);
+
+    public List<Teacher> selectByPage(PageTest pageTest);
 }
 

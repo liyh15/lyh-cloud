@@ -16,5 +16,7 @@ public interface StudentMapper {
     public Integer update(@Param("id") Integer id);
 
     public Integer insert(@Param("list") List<Student> student);
+
+    public List<Student> select(@Param("list") String name);
 }
 

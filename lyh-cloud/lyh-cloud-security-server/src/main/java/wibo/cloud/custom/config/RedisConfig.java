@@ -1,5 +1,6 @@
 package wibo.cloud.custom.config;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -99,6 +101,8 @@ public class RedisConfig {
 
     /**
      * RedisTemplate配置
+     *
+     * https://blog.csdn.net/xiaodujava/article/details/82190618 三种对象json之间的转换说明
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory connectionFactory) {
@@ -132,7 +136,7 @@ public class RedisConfig {
          *   @JsonDeserialize(as = Apple.class) 注释在接口属性上会指定反序列化的实体类
          *
          */
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY); // JsonAutoDetect.Visibility.ANY表示所有类型的属性
         // 空属性不会转化成json
         om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
@@ -141,9 +145,9 @@ public class RedisConfig {
         RedisSerializer<?> stringSerializer = new StringRedisSerializer();
         redisTemplate.setKeySerializer(stringSerializer);// key序列化
         redisTemplate.setConnectionFactory(connectionFactory);
-        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);// value序列化
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());// value序列化
         redisTemplate.setHashKeySerializer(stringSerializer);// Hash key序列化
-        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);// Hash value序列化
+        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());// Hash value序列化
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }

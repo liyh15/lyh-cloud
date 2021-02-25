@@ -1,6 +1,7 @@
 package wibo.cloud.custom.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -27,6 +28,9 @@ public class MyBatisConfig {
         druidDataSource.setUrl(mySqlConfiguration.getJdbcUrl());
         druidDataSource.setUsername(mySqlConfiguration.getUserName());
         druidDataSource.setPassword(mySqlConfiguration.getPassword());
+        druidDataSource.setMaxActive(10);
+        // TODO 设置最长等待连接时间，默认无限
+        // druidDataSource.setMaxWait(1000);
         return druidDataSource;
     }
 
@@ -37,6 +41,7 @@ public class MyBatisConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         factoryBean.setMapperLocations(
                 resolver.getResources("classpath*:mapper/*Mapper.xml"));
+        factoryBean.setPlugins(new MyPlugin(), new PagePlugin());
         factoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
         return factoryBean.getObject();
     }

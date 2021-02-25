@@ -1,6 +1,10 @@
 package wibo.cloud.custom.controller;
 
 import lombok.Data;
+import lombok.ToString;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @Classname Test
@@ -9,19 +13,12 @@ import lombok.Data;
  * @Created by lyh
  */
 @Data
-public class Test<T> {
-
-    private T a;
+@ToString
+public class Test implements Serializable {
 
     private String name = "lyh";
 
     private Integer age = 12;
 
-    public static void main(String[] args) {
-        Test t = new Test<>();
-        t.setA("12");
-        Test<String> t2 = t;
-        System.out.println(t2.getA());
-    }
-
+    private LocalDateTime localDateTime = LocalDateTime.now();
 }

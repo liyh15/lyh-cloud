@@ -12,4 +12,7 @@
             (#{s.name})
         </foreach>
     </insert>
+    <select id="select" resultType = "wibo.cloud.common.pojo.Student">
+        select * from student;
+    </select>
 </mapper>

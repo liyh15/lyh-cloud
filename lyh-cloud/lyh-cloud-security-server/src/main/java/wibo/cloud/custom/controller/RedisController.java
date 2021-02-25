@@ -1,5 +1,6 @@
 package wibo.cloud.custom.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -46,7 +48,7 @@ public class RedisController {
         try {
             RLock rLock = redissonClient.getLock(key);
             // TODO 如果此key已经有锁，则返回false,如果填了时间，则最长等待两秒，两秒内如果没有获得锁则返回false
-            a = rLock.tryLock(2,  TimeUnit.SECONDS);
+            a = rLock.tryLock(10,  TimeUnit.SECONDS);
             System.out.println(a + key);
             Thread.sleep(5000);
             return "lock";
@@ -77,9 +79,13 @@ public class RedisController {
     }
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
-    public String test() throws InterruptedException {
-        System.out.println("Aaaaa");
-        Thread.sleep(10000);
+    public String test() throws InterruptedException, IOException {
+        Test test = new Test();
+        redisTemplate.opsForValue().set("test1111", test);
+        String a = (String) redisTemplate.opsForValue().get("test1111");
+        ObjectMapper om = new ObjectMapper();
+        test = om.readValue(a, Test.class);
+        System.out.println(test);
         return "aaaa";
     }
 
@@ -95,9 +101,9 @@ public class RedisController {
         return "aaaa";
     }
 
-    @RequestMapping(value = "/obj",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public String obj() throws InterruptedException {
-        redisTemplate.opsForValue().set("cccccc", new Test());
+         redisTemplate.delete("asdasdasdasd");
         return "aaaa";
     }
 
@@ -105,6 +111,30 @@ public class RedisController {
     public String get() throws InterruptedException {
         Test test = (Test) redisTemplate.opsForValue().get("cccccc");
         System.out.println(redisTemplate.opsForValue().get("cccccc"));
+        return "aaaa";
+    }
+
+    @RequestMapping(value = "/longTest",method = RequestMethod.GET)
+    public String longTest() throws InterruptedException {
+        int b = 13;
+        redisTemplate.opsForValue().set("aaaaa", b);
+        System.out.println(redisTemplate.opsForValue().get("aaaaa"));
+        redisTemplate.opsForValue().increment("aaaaa", 1);
+        return "aaaa";
+    }
+
+    @RequestMapping(value = "/lonssgTest",method = RequestMethod.GET)
+    public String sssss() throws InterruptedException {
+        int b = 13;
+        redisTemplate.opsForValue().set("aaaaa", b);
+        redisTemplate.opsForValue().set("aaaaa", b);
+        redisTemplate.opsForValue().set("aaaaa", b);
+        redisTemplate.opsForValue().set("aaaaa", b);
+        System.out.println(redisTemplate.opsForValue().get("aaaaa"));
+        System.out.println(redisTemplate.opsForValue().get("aaaaa"));
+        System.out.println(redisTemplate.opsForValue().get("aaaaa"));
+        System.out.println(redisTemplate.opsForValue().get("aaaaa"));
+        redisTemplate.opsForValue().increment("aaaaa", 1);
         return "aaaa";
     }
 
