@@ -3,6 +3,7 @@ package wibo.cloud.uaa.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,8 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder bCryptPasswordEncoder;
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     @Bean
+    @Override
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager  = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("lyh").password(bCryptPasswordEncoder.encode("123")).authorities("p1").build());

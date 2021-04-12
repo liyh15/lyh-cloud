@@ -57,7 +57,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
               .resourceIds("res1") // 表示允许访问的资源标识
               .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
               .scopes("all") // 允许的授权范围
-              .accessTokenValiditySeconds(1800); // 设置accesstoken的过期时间，1800秒
+              .accessTokenValiditySeconds(1800).redirectUris("http://www.baidu.com"); // 设置accesstoken的过期时间，1800秒
 //              .autoApprove(true) // 不需要手动点击授权
 //              // 加上验证回调地址
 //              .redirectUris("http://www.baidu.com");
