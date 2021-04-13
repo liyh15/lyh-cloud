@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wibo.cloud.uaa.mapper.UserMapper">
+
+    <resultMap id="userMap" type="wibo.cloud.uaa.dto.UserDto">
+        <id column="user_id" property="id"/>
+        <result column="user_name" property="name"/>
+        <result column="user_pass" property="password"/>
+        <collection property="userAuth" ofType="wibo.cloud.uaa.dto.Auth">
+             <id column="au_id" property="id"/>
+             <result column="au_name" property="name"/>
+             <result column="au_auth" property="auth"/>
+        </collection>
+    </resultMap>
+
+    <insert id="reg">
+        insert into user(name,password) values(#{user.name},#{user.password})
+    </insert>
+    <select id="getUserByName" resultMap="userMap">
+        select
+        us.id user_id,
+        us.name user_name,
+        us.password user_pass,
+        au.id au_id,
+        au.name au_name,
+        au.auth au_auth
+        from
+           user us
+        left join
+           user_auth_link ual
+        on us.id = ual.user_id
+        left join
+            auth au
+        on ual.auth_id = au.id
+        where us.name  = #{name}
+    </select>
+</mapper>

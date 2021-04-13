@@ -19,7 +19,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+    private MyUserDetailsService myUserDetailsService;
+
 
     @Bean
     @Override
@@ -27,13 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager  = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("lyh").password(bCryptPasswordEncoder.encode("123")).authorities("p1").build());
-        manager.createUser(User.withUsername("hzy").password(bCryptPasswordEncoder.encode("123")).authorities("p2").build());
-        return manager;
+        return myUserDetailsService;
     }
 
     // 密码编辑器
@@ -46,11 +43,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 配置安全拦截机制
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         http.authorizeRequests()   // 表示对请求进行鉴权
-                .antMatchers("/login*").permitAll().anyRequest().authenticated()
+                .antMatchers("/login*","/r/**","/swagger-ui.html","/webjars/**","/v2/**","/swagger-resources/**").permitAll().
+                 anyRequest().authenticated()
                 .and()
                 .formLogin() // 允许表单登录，也就是security自定义的登录方式
-                .loginProcessingUrl("/loginn"); // 设置验证账号密码的路径,security表单登录时的请求路径会按照这个命名
+                .loginProcessingUrl("/login") // 设置验证账号密码的路径,security表单登录时的请求路径会按照这个命名
+                .and().csrf().disable();
                 // .successForwardUrl("/r/name"); // 自定义登录成功跳转的地址，如果是网站的话需要跳到主页
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);  // 表示有需要就创建一个session
         //always 如果没有session存在就创建一个 ifRequired 如果需要就创建一个Session（默认）登录时

@@ -57,7 +57,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
               .resourceIds("res1") // 表示允许访问的资源标识
               .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
               .scopes("all") // 允许的授权范围
-              .accessTokenValiditySeconds(1800).redirectUris("http://www.baidu.com"); // 设置accesstoken的过期时间，1800秒
+              .accessTokenValiditySeconds(1800). // 设置accesstoken的过期时间，1800秒
+              redirectUris("http://www.baidu.com"); // 授权码模式中通过后重定向的地址
 //              .autoApprove(true) // 不需要手动点击授权
 //              // 加上验证回调地址
 //              .redirectUris("http://www.baidu.com");
@@ -85,12 +86,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
                 .tokenStore(tokenStore) // 配置令牌的存储方式
-                .userDetailsService(userDetailsService)
+                .userDetailsService(userDetailsService). // 设置这个是用来进行刷新用户判断的
+                authorizationCodeServices(authorizationCodeServices) // 配置授权码存储方式
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
     }
 
     /**
-     * 定义管理令牌的接口类，可以对令牌进行详细的配置
+     * TODO 定义管理令牌的接口类，可以对令牌进行详细的配置
      * @return
      */
     public AuthorizationServerTokenServices tokenService() {
