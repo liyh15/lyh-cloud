@@ -43,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
          // 配置全线路径，先局部配置，然后再整体配置
-        http.authorizeRequests().antMatchers("/se/**").authenticated().anyRequest().permitAll().and().formLogin().and().csrf().disable();
+        http.authorizeRequests().antMatchers("/se/**").authenticated()
+                .anyRequest().permitAll().and().
+                formLogin().and().csrf().disable(); // TODO 接受所有域名的跨域请求
     }
 }

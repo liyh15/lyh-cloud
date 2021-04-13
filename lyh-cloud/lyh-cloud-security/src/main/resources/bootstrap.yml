@@ -17,7 +17,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.126.129
     port: 5672
     username: admin
     password: admin
@@ -28,6 +28,15 @@ spring:
     jdbcUrl: jdbc:mysql://192.168.126.129:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
     userName: root
     password: 851535
+  flyway: # https://baijiahao.baidu.com/s?id=1659024978275677262&wfr=spider&for=pc
+    enabled: true
+    encoding: UTF-8
+    clean-disabled: true # 不清除数据库中的表
+    baseline-on-migrate: true # 对于已存在表的数据库而言
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # mybatis采用驼峰命名，这样就可以做映射了，例如userName和user_name
 
 eureka:
   instance:
@@ -45,3 +54,10 @@ redis:
     maxTotal: 10
     minIdle: 10
     maxIdle: 10
+
+# Minio配置
+minio:
+  url: http://192.168.126.129:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: test

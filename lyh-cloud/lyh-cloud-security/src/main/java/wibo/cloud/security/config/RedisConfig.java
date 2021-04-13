@@ -145,8 +145,8 @@ public class RedisConfig {
         redisTemplate.setKeySerializer(stringSerializer);// key序列化
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());// value序列化
-        redisTemplate.setHashKeySerializer(stringSerializer);// Hash key序列化
-        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());// Hash value序列化
+        redisTemplate.setHashKeySerializer(stringSerializer);// TODO Hash key序列化
+        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());// TODO Hash value序列化
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }

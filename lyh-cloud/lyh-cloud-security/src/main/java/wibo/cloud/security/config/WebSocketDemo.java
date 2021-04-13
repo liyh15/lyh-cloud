@@ -1,12 +1,10 @@
 package wibo.cloud.security.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -17,7 +15,7 @@ import java.util.*;
  * @Created by lyh
  */
 @Component
-@ServerEndpoint(value = "/websocket/{userId}")
+@ServerEndpoint("/websocket/{userId}")
 public class WebSocketDemo {
 
     private static Map<Long, Set<WebSocketDemo>> userSocket = new HashMap<>();
@@ -42,6 +40,7 @@ public class WebSocketDemo {
 
     @OnClose
     public void close() {
+        System.out.println(this.userId + "close LE");
         if (userSocket.get(this.userId).size() == 0) {
             userSocket.remove(this.userId);
         } else {
