@@ -1,4 +1,4 @@
-package wibo.cloud.uaa.config;
+package wibo.cloud.uaa.sucurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

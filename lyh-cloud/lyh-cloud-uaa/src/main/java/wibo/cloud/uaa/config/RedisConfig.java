@@ -18,6 +18,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +84,8 @@ public class RedisConfig {
 
     @Autowired
     private RedisClusterProperties redisClusterProperties;
+
+
 
     /**
      *
@@ -213,6 +217,7 @@ public class RedisConfig {
     }
 
     public static void main(String[] args) throws IOException {
+
          Test test = new Test();
          Apple apple = new Apple();
          test.setFruit(apple);

@@ -1,4 +1,4 @@
-package wibo.cloud.uaa.config;
+package wibo.cloud.uaa.sucurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +8,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import wibo.cloud.uaa.dto.UserDto;
 import wibo.cloud.uaa.mapper.UserMapper;
 
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,6 +40,7 @@ public class MyUserDetailsService implements UserDetailsService {
         Collection<? extends GrantedAuthority> authorities
                 = AuthorityUtils.createAuthorityList(permission.toArray(new String[0]));
 
+        // TODO 如果需要自定义用户类，直接继承User对象即可
         UserDetails userDetails = User.withUsername(username).password(userDto.getPassword()).authorities(authorities).build();
         return userDetails;
     }

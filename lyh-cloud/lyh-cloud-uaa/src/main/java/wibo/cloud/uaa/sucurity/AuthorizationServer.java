@@ -1,4 +1,4 @@
-package wibo.cloud.uaa.config;
+package wibo.cloud.uaa.sucurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,9 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import wibo.cloud.uaa.sucurity.TokenStoreService;
 
 /**
  * 配置OAuth2.0授权服务器
@@ -42,6 +44,12 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthorizationCodeServices authorizationCodeServices;
 
+    @Autowired
+    private TokenStoreService tokenStoreService;
+
+    @Autowired
+    private TokenEnhancer tokenEnhancer;
+
     /**
      * 配置客户端详情信息
      * 可用于配置客户端的认证信息，从而实现客户端的筛选功能，就是类似于ClientDetailService
@@ -51,17 +59,15 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // clients.withClientDetails(clientDetailsService);
-      clients.inMemory() // 使用内存存储
-              .withClient("client1") // client_id
-              .secret(new BCryptPasswordEncoder().encode("secret"))
-              .resourceIds("res1") // 表示允许访问的资源标识
-              .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
-              .scopes("all") // 允许的授权范围
-              .accessTokenValiditySeconds(1800). // 设置accesstoken的过期时间，1800秒
-              redirectUris("http://www.baidu.com"); // 授权码模式中通过后重定向的地址
-//              .autoApprove(true) // 不需要手动点击授权
-//              // 加上验证回调地址
-//              .redirectUris("http://www.baidu.com");
+        clients.inMemory() // 使用内存存储
+                .withClient("client1") // client_id
+                .secret(new BCryptPasswordEncoder().encode("secret"))
+                .resourceIds("res1") // 表示允许访问的资源标识
+                .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token") // 该client允许的授权类型
+                .scopes("all") // 允许的授权范围
+                .accessTokenValiditySeconds(1800). // 设置accesstoken的过期时间，1800秒
+                redirectUris("http://www.baidu.com"). // 授权成功后跳转的地址
+                autoApprove(false);
     }
 
     /**
@@ -84,25 +90,17 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
-                .tokenStore(tokenStore) // 配置令牌的存储方式
-                .userDetailsService(userDetailsService). // 设置这个是用来进行刷新用户判断的
-                authorizationCodeServices(authorizationCodeServices) // 配置授权码存储方式
-                .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
-    }
+        tokenStoreService.setTokenStore(tokenStore);
+        tokenStoreService.setSupportRefreshToken(true);
+        tokenStoreService.setAccessTokenValiditySeconds(7200); // 令牌默认有效期2小时
+        tokenStoreService.setRefreshTokenValiditySeconds(259200); // 刷新令牌默认有效期3天
+        tokenStoreService.setTokenEnhancer(tokenEnhancer); // 配置自定义增强器
 
-    /**
-     * TODO 定义管理令牌的接口类，可以对令牌进行详细的配置
-     * @return
-     */
-    public AuthorizationServerTokenServices tokenService() {
-        DefaultTokenServices service = new DefaultTokenServices();
-        service.setClientDetailsService(clientDetailsService);
-        service.setSupportRefreshToken(true);
-        service.setTokenStore(tokenStore);
-        service.setAccessTokenValiditySeconds(7200); // 令牌默认有效期2小时
-        service.setRefreshTokenValiditySeconds(259200); // 刷新令牌默认有效期3天
-        return service;
+        endpoints.authenticationManager(authenticationManager)  // 认证管理器，用于密码认证
+                .tokenServices(tokenStoreService) // 设置自定义tokenService
+                .userDetailsService(userDetailsService). // 设置这个是用来进行刷新用户判断的
+                authorizationCodeServices(authorizationCodeServices)// 配置授权码存储方式
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST); // 支持的访问方法
     }
 
     /**
