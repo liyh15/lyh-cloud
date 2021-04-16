@@ -43,7 +43,7 @@ public class RabbitMQComsumer {
                 channel.basicAck(envelope.getDeliveryTag(), false);
             }
         };
-        // TODO 在一个通道下开启多个消费者在一次拉取下只会有一个消费者消费
+        // TODO 在一个通道下开启多个消费者在一次拉取下只会有一个消费者消费,是单线程的
         channel.basicConsume("directQueueDEAD",false, consumer2);
         channel.basicConsume("directQueueTest",false, consumer);
         TimeUnit.SECONDS.sleep(100000);

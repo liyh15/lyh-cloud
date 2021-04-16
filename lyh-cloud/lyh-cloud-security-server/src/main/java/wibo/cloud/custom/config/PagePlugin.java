@@ -10,6 +10,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 
+import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.util.Map;
 

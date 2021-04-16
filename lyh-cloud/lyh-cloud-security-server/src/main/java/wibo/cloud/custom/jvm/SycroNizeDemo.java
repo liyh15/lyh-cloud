@@ -12,11 +12,15 @@ public class SycroNizeDemo implements InvotionTestMapper{
         System.out.println(a);
     }
 
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+
     public static void main(String[] args) {
-        SycroNizeDemo demo = new SycroNizeDemo();
+        InvotionTestMapper demo = new SycroNizeDemo();
         demo.one();
-        demo.test(1);
-        demo.test(2);
+        demo.hashCode();
     }
 
     @Override

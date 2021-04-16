@@ -34,6 +34,7 @@ public class RabbitProduction {
         channel.queueDeclare("directQueueTest", true, false, false, map);
         channel.queueBind("directQueueTest", "directExchangeTest", "directQueueTest");
         String message = "hello world";
+        // MessageProperties.PERSISTENT_TEXT_PLAIN 设置消息的持久化
         channel.basicPublish("directExchangeTest", "directQueueTest",true, MessageProperties.PERSISTENT_TEXT_PLAIN, (message).getBytes());
         channel.addReturnListener(new ReturnListener() {
             @Override

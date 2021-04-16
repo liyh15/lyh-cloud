@@ -17,6 +17,7 @@ public class SecurityController {
     @PreAuthorize("hasAuthority('admin')")
     public String admin() {
         System.out.println(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        
         return "admin";
     }
 
@@ -24,17 +25,6 @@ public class SecurityController {
     @PreAuthorize("hasAuthority('user')")
     public String user() {
         return "user";
-    }
-
-    public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("localhost", 9000);
-        OutputStream outputStream = socket.getOutputStream();
-        InputStream inputStream = socket.getInputStream();
-        outputStream.write(1);
-        outputStream.close();
-        System.out.println(inputStream.read());
-        System.out.println();
-        inputStream.close();
     }
 
 }

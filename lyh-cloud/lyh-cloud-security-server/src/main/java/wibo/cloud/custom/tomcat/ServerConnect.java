@@ -34,10 +34,12 @@ public class ServerConnect {
            long a = -1;
            while ((a = socketChannel.read(byteBuffer)) > 0) {
                byteBuffer.flip();
+               StringBuilder builder = new StringBuilder();
                while (byteBuffer.hasRemaining()) {
-                   System.out.println((char)byteBuffer.get());
+                   builder.append((char)byteBuffer.get());
                }
                byteBuffer.clear();
+               System.out.println(builder.toString());
            }
            if (a == -1) {
                socketChannel.close();

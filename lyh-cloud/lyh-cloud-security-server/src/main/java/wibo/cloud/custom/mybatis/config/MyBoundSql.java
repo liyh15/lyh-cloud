@@ -371,7 +371,7 @@ public class MyBoundSql {
             Matcher matcherBody1 = regex1.matcher(text);
             Matcher matcherBody2 = regex2.matcher(text);
             while (matcherBody1.find()) {
-                String paramName = matcherBody1.group(1);
+                String paramName = matcherBody1.group(1); // TODO 表示取出第一个括号里的东西
                 DataBean dataBean = getDataBean(paramName, dataBeanList, paramObject, myMappedStatement);
                 String paramRealName = dataBean.getRealName();
                 Object objj = dataBean.getData();

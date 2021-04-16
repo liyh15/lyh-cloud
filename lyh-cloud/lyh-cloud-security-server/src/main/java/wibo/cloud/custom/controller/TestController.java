@@ -160,6 +160,10 @@ public class TestController {
     @RequestMapping(value = "update555555", method = RequestMethod.GET)
     @Transactional
     public String update555555(Integer age) throws InterruptedException {
+
+        List t = null;
+        List<String> t2 = t;
+
         teacherMapper.updateN(age);
         System.out.println("BBBBBBBBBBBBBBBBB");
         Thread.sleep(5000);
@@ -167,7 +171,6 @@ public class TestController {
     }
 
     @RequestMapping(value = "forup2", method = RequestMethod.GET)
-    @Transactional
     public String forup2(String name) throws InterruptedException {
         // TODO 对于插入而，如果插入的记录对应索引字段的字符串前两个字符匹配，则会阻塞
         teacherMapper.insert(name);
