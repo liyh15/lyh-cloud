@@ -17,7 +17,6 @@ public class SecurityController {
     @PreAuthorize("hasAuthority('admin')")
     public String admin() {
         System.out.println(((UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-        
         return "admin";
     }
 
@@ -26,5 +25,4 @@ public class SecurityController {
     public String user() {
         return "user";
     }
-
 }

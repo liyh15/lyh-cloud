@@ -1,5 +1,5 @@
 server:
-  port: 8087
+  port: 8089
 spring:
   application:
     name: server
@@ -17,7 +17,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   rabbitmq:
-    host: 127.0.0.1
+    host: 192.168.126.129
     port: 5672
     username: admin
     password: admin
@@ -25,24 +25,27 @@ spring:
     virtual-host: /
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://10.11.1.188:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
+    jdbcUrl: jdbc:mysql://192.168.126.129:3306/test?useUnicode=true&characterEncoding=UTF-8&socketTimeout=60000
     userName: root
     password: 851535
-
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8762/eureka
 
 redis:
   cluster:
-    nodes: 10.11.1.188:7001,10.11.1.188:7002,10.11.1.188:7003,10.11.1.188:7004,10.11.1.188:7005,10.11.1.188:7006
+    nodes: 192.168.126.129:7001,192.168.126.129:7002,192.168.126.129:7003,192.168.126.129:7004,192.168.126.129:7005,192.168.126.129:7006
     timeout: 60000
     maxAttempts: 3
     maxWaitMillis: 60000
     maxTotal: 10
     minIdle: 10
     maxIdle: 10
+
+lyh:
+  mybatis:
+    mapperPath: C:\lyh-cloudd\lyh-cloud\lyh-cloud-security-server\src\main\java\wibo\cloud\custom\mybatis\xml

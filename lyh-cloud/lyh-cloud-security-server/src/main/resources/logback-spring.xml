@@ -171,8 +171,7 @@
          多个环境可用逗号隔开-->
     <springProfile name="dev">
         <!--name:为指定的包名 level：自定义日志等级 additivity:表示打印信息不再向上传递，也就是不经过root-->
-        <logger name="com.wibo.server.controller" level="error" additivity="true">
-            <appender-ref ref="CONSOLE" />
+        <logger name="wibo.cloud.custom.mapper" level="debug" additivity="true">
         </logger>
     </springProfile>
 

@@ -30,7 +30,7 @@
         insert into teacher values (4,#{name},12)
     </insert>
     <insert id="insertId">
-        insert into teacher values (#{id},'aaaaaaaa',12)
+        insert into teacher(id,name,age) values (#{id},'aaaaaaaa',12)
     </insert>
 
     <select id="select" resultType="wibo.cloud.common.pojo.Teacher">

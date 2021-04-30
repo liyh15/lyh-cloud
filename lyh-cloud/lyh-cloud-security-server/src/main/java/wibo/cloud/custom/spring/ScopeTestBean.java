@@ -17,4 +17,7 @@ import java.util.UUID;
 public class ScopeTestBean {
 
     private String name = UUID.randomUUID().toString();
+
+    public static void main(String[] args) {
+    }
 }

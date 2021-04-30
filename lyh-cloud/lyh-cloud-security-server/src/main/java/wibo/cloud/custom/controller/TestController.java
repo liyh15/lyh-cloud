@@ -6,6 +6,7 @@ import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +57,46 @@ public class TestController {
     @Autowired
     private ServiceInterFace serviceInterFace;
 
+    @Value("${parmas.body}")
+    private String name;
+
+    /**
+     * @param
+     * @return
+     * @throws
+     * @description 数据库操作A方法，分别更新两张表
+     * @author liyuanhao
+     * @date 2020/7/20 19:18
+     */
+    @RequestMapping(value = "teacher", method = RequestMethod.GET)
+    @Transactional
+    public String teacher(Integer age) throws InterruptedException {
+        System.out.println(name);
+        return "teacher";
+    }
+
+    @RequestMapping(value = "teacherIn", method = RequestMethod.GET)
+    @Transactional
+    public String teacherIn(Integer id) throws InterruptedException {
+        teacherMapper.insertId(id);
+        Thread.sleep(5000);
+        return "teacher";
+    }
+
+    /**
+     * @param
+     * @return
+     * @throws
+     * @description 数据库操作A方法，分别更新两张表
+     * @author liyuanhao
+     * @date 2020/7/20 19:18
+     */
+    @RequestMapping(value = "teacher2", method = RequestMethod.GET)
+    @Transactional
+    public String teacher2(Integer age) throws InterruptedException {
+        teacherMapper.updateN(age);
+        return "teacher2";
+    }
 
     /**
      * @param
@@ -181,8 +222,6 @@ public class TestController {
     @RequestMapping(value = "forup4", method = RequestMethod.GET)
     @Transactional
     public String forup4(String id) throws InterruptedException {
-        // TODO 对于数字索引字段而言，如果存在查询语句对此索引加锁(不管此索引字段是否存在)，都会被阻塞
-        teacherMapper.insertId(id);
         System.out.println("eeeeeeeeeeee");
         Thread.sleep(5000);
         return "two";

@@ -3,8 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-     <bean id = "source" class="wibo.cloud.custom.jvm.SringTest">
+    <bean id = "source1" class="wibo.cloud.custom.spring.SpringBeanTest2">
+        <property name="name" value="liyuanhao"/>
+        <property name="age" value="1223"/>
+    </bean>
+    <bean id = "source2" class="wibo.cloud.custom.spring.SpringBeanTest3">
+        <property name="name" value="liyuanhao"/>
+        <property name="age" value="1223"/>
+    </bean>
+     <bean id = "source" class="wibo.cloud.custom.spring.SpringBeanTest">
          <property name="name" value="liyuanhao"/>
          <property name="age" value="1223"/>
      </bean>
+
 </beans>

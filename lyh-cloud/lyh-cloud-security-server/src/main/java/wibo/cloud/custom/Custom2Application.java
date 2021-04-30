@@ -17,15 +17,6 @@ import java.util.List;
 public class Custom2Application {
     public static void main(String[] args) {
 
-        List list = new ArrayList();
-        list.add(5);
-        list.add(4);
-        list.add(3);
-        list.add(2);
-        list.add(1);
-
-        Collections.sort(list);
-        System.out.println(list);
-        //SpringApplication.run(Custom2Application.class, args);
+        SpringApplication.run(Custom2Application.class, args);
     }
 }

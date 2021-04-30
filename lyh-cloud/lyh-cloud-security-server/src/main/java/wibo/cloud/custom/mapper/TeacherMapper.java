@@ -25,7 +25,7 @@ public interface TeacherMapper {
 
     public Integer insert(@Param("name") String name);
 
-    public Integer insertId(@Param("id") String id);
+    public Integer insertId(@Param("id") Integer id);
 
     public Teacher forupId(@Param("id") String id);
 
