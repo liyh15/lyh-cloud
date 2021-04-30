@@ -35,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      }
 
     @Bean
+    // TODO 使用接口返回对象要用接口接受不能用具体的实现类接收
+    // TODO spring只会根据返回类型来存储，不会关心实际引用的东西
     public PasswordEncoder passwordEncoder() {
          // 临时创建一个不需要加密
          return new BCryptPasswordEncoder();

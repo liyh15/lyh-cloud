@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.multipart.MultipartFile;
 import wibo.cloud.security.config.BeanUtil;
 import wibo.cloud.security.config.ScopeBean;
 import wibo.cloud.security.service.TestService;
@@ -31,19 +32,31 @@ public class TestController {
     @Autowired
     private ScopeBean scopeBean;
 
+    @Autowired
+    private TestService testService;
+
     private String aaa = "Asdasd";
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+
+    @PostMapping("mysql1")
+    public String mysql1() {
+        System.out.println("asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        return "test";
+    }
+
     @PostMapping("test")
     public String test() {
+        System.out.println("asdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
       return "test";
     }
 
     @PostMapping("test2")
     public String test2(@RequestParam("lyh") String lyh, @RequestParam("name") String name) {
-        System.out.println(lyh);
+        String a = testService.aaa();
+        System.out.println(a);
         return "test2";
     }
 
@@ -211,7 +224,7 @@ public class TestController {
     }
 
     @PostMapping("exec")
-    public DeferredResult<String> exec() {
+    public DeferredResult<String> exec() throws InterruptedException {
         DeferredResult<String> deferredResult = new DeferredResult<>(10000L,"ertertertert");
         deferredResult.onCompletion(new Runnable() {
             @Override
@@ -244,5 +257,11 @@ public class TestController {
 
         testService.aaa();
         return "hello";
+    }
+
+    @PostMapping("uploadFile")
+    public String  uploadFile(@RequestParam("file")MultipartFile multipartFile) {
+        System.out.println(multipartFile.getOriginalFilename());
+        return "uploadFile";
     }
 }

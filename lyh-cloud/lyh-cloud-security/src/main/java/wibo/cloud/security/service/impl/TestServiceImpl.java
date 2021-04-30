@@ -11,10 +11,18 @@ import wibo.cloud.security.service.TestService;
  * @Created by lyh
  */
 @Service
-@Primary
 public class TestServiceImpl implements TestService {
+
+
     @Override
-    public void aaa() {
+    public String aaa() {
         System.out.println("aaa");
+        return "aaaasdasdaaaa";
+    }
+
+    public void syTest() {
+        String a = "ad";
+        synchronized (a) {
+        }
     }
 }

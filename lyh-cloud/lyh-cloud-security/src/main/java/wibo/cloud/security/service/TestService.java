@@ -8,5 +8,5 @@ package wibo.cloud.security.service;
  */
 public interface TestService {
 
-    public void aaa();
+     String aaa();
 }
