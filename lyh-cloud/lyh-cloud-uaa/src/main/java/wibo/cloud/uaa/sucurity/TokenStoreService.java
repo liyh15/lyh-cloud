@@ -39,6 +39,7 @@ public class TokenStoreService extends DefaultTokenServices {
     public OAuth2AccessToken createAccessToken(OAuth2Authentication authentication) throws AuthenticationException {
         OAuth2AccessToken existingAccessToken = this.tokenStore.getAccessToken(authentication);
         if (existingAccessToken != null) {
+            // TODO 使用这个进行登录下线
             this.tokenStore.removeAccessToken(existingAccessToken);
         }
         return super.createAccessToken(authentication);

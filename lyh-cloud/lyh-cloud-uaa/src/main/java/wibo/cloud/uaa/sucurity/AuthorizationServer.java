@@ -67,7 +67,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .scopes("all") // 允许的授权范围
                 .accessTokenValiditySeconds(1800). // 设置accesstoken的过期时间，1800秒
                 redirectUris("http://www.baidu.com"). // 授权成功后跳转的地址
-                autoApprove(false);
+                autoApprove(false); // 是否需要用户确认授权
     }
 
     /**

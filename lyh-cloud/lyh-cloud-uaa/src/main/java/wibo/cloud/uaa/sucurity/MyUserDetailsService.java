@@ -25,7 +25,6 @@ import java.util.Set;
 @Configuration
 public class MyUserDetailsService implements UserDetailsService {
 
-
     @Autowired
     private UserMapper userMapper;
 
